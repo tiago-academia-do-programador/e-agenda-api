@@ -30,7 +30,7 @@ namespace eAgenda.Aplicacao.ModuloTarefa
 
             try
             {
-                
+
                 repositorioTarefa.Inserir(tarefa);
 
                 contextoPersistencia.GravarDados();
@@ -49,14 +49,14 @@ namespace eAgenda.Aplicacao.ModuloTarefa
 
                 return Result.Fail(msgErro);
             }
-        }              
+        }
 
         public Result<Tarefa> Editar(Tarefa tarefa)
         {
             Log.Logger.Debug("Tentando editar tarefa... {@t}", tarefa);
 
             var resultado = Validar(tarefa);
-                        if (resultado.IsFailed)
+            if (resultado.IsFailed)
                 return Result.Fail(resultado.Errors);
 
             try
@@ -83,14 +83,14 @@ namespace eAgenda.Aplicacao.ModuloTarefa
             return Result.Ok(tarefa);
         }
 
-        public Result<Tarefa> AtualizarItens(Tarefa tarefa, 
+        public Result<Tarefa> AtualizarItens(Tarefa tarefa,
             List<ItemTarefa> itensConcluidos, List<ItemTarefa> itensPendentes)
         {
             foreach (var item in itensConcluidos)
                 tarefa.ConcluirItem(item.Id);
 
             foreach (var item in itensPendentes)
-                tarefa.MarcarPendente(item.Id);            
+                tarefa.MarcarPendente(item.Id);
 
             return Editar(tarefa);
         }

@@ -16,18 +16,10 @@ namespace eAgenda.Infra.Orm.ModuloTarefa
             builder.Property(x => x.DataConclusao).IsRequired(required: false);
             builder.Property(x => x.PercentualConcluido);
 
-            //builder.Ignore(x => x.Usuario);
-
-            //builder.HasOne(x => x.Usuario)
-            //   .WithMany()
-            //   .IsRequired()
-            //   .HasForeignKey(x => x.UsuarioId)
-            //   .OnDelete(DeleteBehavior.NoAction);
-
             builder.HasMany(x => x.Itens)
                 .WithOne(x => x.Tarefa)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
         }
     }
 }

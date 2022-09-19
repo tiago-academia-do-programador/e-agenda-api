@@ -18,11 +18,6 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
             builder.Property(x => x.HoraInicio).HasColumnType("bigint").IsRequired();
             builder.Property(x => x.HoraTermino).HasColumnType("bigint").IsRequired();
 
-            //builder.HasOne(x => x.Usuario)
-            //  .WithMany()
-            //  .IsRequired()
-            //  .HasForeignKey(x => x.UsuarioId)
-            //  .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Contato)
                 .WithMany()

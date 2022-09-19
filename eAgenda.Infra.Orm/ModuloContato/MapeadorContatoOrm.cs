@@ -17,11 +17,6 @@ namespace eAgenda.Infra.Orm.ModuloContato
             builder.Property(x => x.Empresa).HasColumnType("varchar(200)").IsRequired(required: false);
             builder.Property(x => x.Cargo).HasColumnType("varchar(200)").IsRequired(required: false);
 
-            //builder.HasOne(x => x.Usuario)
-            //  .WithMany()
-            //  .IsRequired()
-            //  .HasForeignKey(x => x.UsuarioId)
-            //  .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

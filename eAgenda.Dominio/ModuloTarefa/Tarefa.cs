@@ -30,7 +30,7 @@ namespace eAgenda.Dominio.ModuloTarefa
         public DateTime? DataConclusao { get; set; }
         public List<ItemTarefa> Itens { get { return itens; } }
         public decimal PercentualConcluido { get; set; }
-      
+
 
         public void CalcularPercentualConcluido()
         {
@@ -68,7 +68,7 @@ namespace eAgenda.Dominio.ModuloTarefa
         public bool AdicionarItem(ItemTarefa item)
         {
             if (Itens.Exists(x => x.Equals(item)) == false)
-            {                
+            {
                 item.Tarefa = this;
                 itens.Add(item);
                 DataConclusao = null;
@@ -87,7 +87,7 @@ namespace eAgenda.Dominio.ModuloTarefa
 
             itemTarefa?.Concluir();
 
-            if (itens.All(x => x.Concluido))  
+            if (itens.All(x => x.Concluido))
                 DataConclusao = DateTime.Now.Date;
 
             CalcularPercentualConcluido();

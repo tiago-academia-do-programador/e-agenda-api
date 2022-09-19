@@ -13,7 +13,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
         private readonly eAgendaDbContext db;
 
         public RepositorioTarefaOrmTest()
-        {           
+        {
             var config = new ConfiguracaoAplicacaoeAgenda();
 
             db = new eAgendaDbContext(config.ConnectionStrings);
@@ -178,7 +178,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             //arrange
             Tarefa novaTarefa = new Tarefa("Corrigir provas");
 
-            var repositorio = new RepositorioTarefaOrm(db);            
+            var repositorio = new RepositorioTarefaOrm(db);
 
             var itens = new List<ItemTarefa>
             {
@@ -213,7 +213,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             Tarefa novaTarefa = new Tarefa("Corrigir provas");
 
             var repositorio = new RepositorioTarefaOrm(db);
-            
+
             var itens = new List<ItemTarefa>
             {
                 new ItemTarefa("Item 01"),
@@ -284,7 +284,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             Tarefa t2 = new Tarefa("Corrigir Provas");
             repositorio.Inserir(t2);
 
-            Tarefa t3 = new Tarefa("Implementar Atividades");            
+            Tarefa t3 = new Tarefa("Implementar Atividades");
 
             var itens = new List<ItemTarefa>
             {
@@ -297,7 +297,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             foreach (var item in itens)
             {
                 t3.AdicionarItem(item);
-            }            
+            }
 
             repositorio.Inserir(t3);
 
@@ -307,7 +307,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             {
                 t3.ConcluirItem(item.Id);
             }
-           
+
             repositorio.Editar(t3);
             db.SaveChanges();
 
@@ -334,7 +334,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             repositorio.Inserir(t2);
 
             Tarefa t3 = new Tarefa("Implementar Atividades");
-            
+
             var itens = new List<ItemTarefa>
             {
                 new ItemTarefa("Item 01"),
@@ -355,7 +355,7 @@ namespace eAgenda.Infra.BancoDados.Tests.ModuloTarefa
             foreach (var item in itens)
             {
                 t3.ConcluirItem(item.Id);
-            }                       
+            }
 
             repositorio.Editar(t3);
             db.SaveChanges();

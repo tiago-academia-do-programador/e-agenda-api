@@ -44,9 +44,9 @@ namespace eAgenda.WinApp.ModuloTarefa
                 txtTitulo.Text = tarefa.Titulo;
                 cmbPrioridades.SelectedItem = tarefa.Prioridade;
 
-                foreach (var item in tarefa.Itens)                
+                foreach (var item in tarefa.Itens)
                     listItensTarefa.Items.Add(item);
-                
+
             }
         }
 
@@ -83,7 +83,7 @@ namespace eAgenda.WinApp.ModuloTarefa
             ItemTarefa item = new ItemTarefa();
 
             item.Titulo = txtTituloItem.Text;
-            
+
             tarefa.AdicionarItem(item);
 
             listItensTarefa.Items.Add(item);
@@ -99,6 +99,6 @@ namespace eAgenda.WinApp.ModuloTarefa
 
                 listItensTarefa.Items.Remove(itemTarefa);
             }
-        }     
+        }
     }
 }

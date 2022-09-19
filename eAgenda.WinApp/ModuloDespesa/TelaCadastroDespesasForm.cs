@@ -18,7 +18,7 @@ namespace eAgenda.WinApp.ModuloDespesa
             CarregarFormaPgto();
 
             CarregarCategorias(categorias);
-        }     
+        }
 
         public Func<Despesa, Result<Despesa>> GravarRegistro { get; set; }
 
@@ -60,7 +60,7 @@ namespace eAgenda.WinApp.ModuloDespesa
 
             var categoriasMarcadas = CategoriasMarcadas;
 
-            foreach (var item in categoriasMarcadas)            
+            foreach (var item in categoriasMarcadas)
                 despesa.AtribuirCategoria(item);
 
             var categoriasDesmarcadas = CategoriasDesmarcadas;
@@ -69,7 +69,7 @@ namespace eAgenda.WinApp.ModuloDespesa
                 despesa.RemoverCategoria(item);
 
             var resultadoValidacao = GravarRegistro(despesa);
-            
+
             if (resultadoValidacao.IsFailed)
             {
                 string primeiroErro = resultadoValidacao.Errors[0].Message;

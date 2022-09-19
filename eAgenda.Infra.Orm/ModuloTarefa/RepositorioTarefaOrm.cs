@@ -43,7 +43,7 @@ namespace eAgenda.Infra.Orm.ModuloTarefa
         public List<Tarefa> SelecionarTodos()
         {
             return tarefas.ToList();
-        }       
+        }
 
         public List<Tarefa> SelecionarTodos(StatusTarefaEnum status)
         {

@@ -78,7 +78,7 @@ namespace eAgenda.WinApp.ModuloTarefa
                 CarregarTarefas();
             }
         }
-       
+
         public override void AtualizarItens()
         {
             Tarefa tarefaSelecionada = ObtemTarefaSelecionada();
@@ -94,7 +94,7 @@ namespace eAgenda.WinApp.ModuloTarefa
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
-                servicoTarefa.AtualizarItens(tarefaSelecionada, 
+                servicoTarefa.AtualizarItens(tarefaSelecionada,
                     tela.ItensConcluidos, tela.ItensPendentes);
 
                 CarregarTarefas();

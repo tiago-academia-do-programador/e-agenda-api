@@ -13,8 +13,4 @@
     <ProjectReference Include="..\eAgenda.Dominio\eAgenda.Dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ModuloAutenticacao\" />
-  </ItemGroup>
-
 </Project>
