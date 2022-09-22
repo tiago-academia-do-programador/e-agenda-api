@@ -13,6 +13,7 @@ namespace eAgenda.Webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class TarefasController : eAgendaControllerBase
     {
         private readonly ServicoTarefa servicoTarefa;
@@ -59,22 +60,9 @@ namespace eAgenda.Webapi.Controllers
         }
        
 
-        [HttpPost]
+        [HttpPost]        
         public ActionResult<FormsTarefaViewModel> Inserir(InserirTarefaViewModel tarefaVM)
-        {
-            var listaErros = ModelState.Values
-                .SelectMany(x => x.Errors)
-                .Select(x => x.ErrorMessage);
-
-            if (listaErros.Any())
-            {
-                return BadRequest(new
-                {
-                    sucesso = false,
-                    erros = listaErros.ToList()
-                });
-            }
-
+        {            
             var tarefa = mapeadorTarefas.Map<Tarefa>(tarefaVM);
 
             var tarefaResult = servicoTarefa.Inserir(tarefa);
@@ -92,20 +80,7 @@ namespace eAgenda.Webapi.Controllers
 
         [HttpPut("{id:guid}")]
         public ActionResult<FormsTarefaViewModel> Editar(Guid id, EditarTarefaViewModel tarefaVM)
-        {
-            var listaErros = ModelState.Values
-                .SelectMany(x => x.Errors)
-                .Select(x => x.ErrorMessage);
-
-            if (listaErros.Any())
-            {
-                return BadRequest(new
-                {
-                    sucesso = false,
-                    erros = listaErros.ToList()
-                });
-            }
-
+        {           
             var tarefaResult = servicoTarefa.SelecionarPorId(id);
 
             if (tarefaResult.IsFailed && RegistroNaoEncontrado(tarefaResult))

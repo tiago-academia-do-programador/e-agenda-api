@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eAgenda.Webapi.Config.AutoMapperConfig;
+using eAgenda.Webapi.Filters;
 
 namespace eAgenda.Webapi
 {
@@ -32,7 +33,8 @@ namespace eAgenda.Webapi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
+
             services.Configure<ApiBehaviorOptions>(config =>
             {
                 config.SuppressModelStateInvalidFilter = true;
@@ -50,7 +52,11 @@ namespace eAgenda.Webapi
 
             services.AddTransient<ServicoTarefa>();
 
-            services.AddControllers();
+            services.AddControllers( config =>
+            {
+                config.Filters.Add(new ValidarViewModelActionFilter());
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "eAgenda.Webapi", Version = "v1" });
