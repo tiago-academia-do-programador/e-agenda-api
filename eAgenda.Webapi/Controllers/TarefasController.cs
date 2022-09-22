@@ -1,15 +1,12 @@
-﻿using eAgenda.Aplicacao.ModuloTarefa;
-using eAgenda.Dominio.Compartilhado;
+﻿using AutoMapper;
+using eAgenda.Aplicacao.ModuloTarefa;
 using eAgenda.Dominio.ModuloTarefa;
-using eAgenda.Infra.Configs;
-using eAgenda.Infra.Orm;
-using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.Webapi.ViewModels;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace eAgenda.Webapi.Controllers
 {
@@ -18,149 +15,174 @@ namespace eAgenda.Webapi.Controllers
     public class TarefasController : ControllerBase
     {
         private readonly ServicoTarefa servicoTarefa;
+        private readonly IMapper mapeadorTarefas;
 
-        public TarefasController()
+        public TarefasController(ServicoTarefa servicoTarefa, IMapper mapeadorTarefas)
         {
-            var config = new ConfiguracaoAplicacaoeAgenda();
-
-            var eAgendaDbContext = new eAgendaDbContext(config.ConnectionStrings);
-            var repositorioTarefa = new RepositorioTarefaOrm(eAgendaDbContext);
-            servicoTarefa = new ServicoTarefa(repositorioTarefa, eAgendaDbContext);
+            this.servicoTarefa = servicoTarefa;
+            this.mapeadorTarefas = mapeadorTarefas;
         }
 
         [HttpGet]
-        public List<ListarTarefaViewModel> SelecionarTodos()
+        public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos()
         {
             var tarefaResult = servicoTarefa.SelecionarTodos(StatusTarefaEnum.Todos);
 
-            if (tarefaResult.IsSuccess)
+            if (tarefaResult.IsFailed)
             {
-                var tarefasGravadas = tarefaResult.Value;
-                var listagemTarefas = new List<ListarTarefaViewModel>();
-
-                foreach (var item in tarefasGravadas)
+                return StatusCode(500, new
                 {
-                    var tarefaVM = new ListarTarefaViewModel
-                    {
-                        Id = item.Id,
-                        Titulo = item.Titulo,
-                        Prioridade = item.Prioridade.GetDescription(),
-                        Situacao = item.PercentualConcluido == 100 ? "Concluído" : "Pendente"
-                    };
-
-                    listagemTarefas.Add(tarefaVM);
-                }
-
-                return listagemTarefas;
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
             }
 
-            return null;
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorTarefas.Map<List<ListarTarefaViewModel>>(tarefaResult.Value)
+            });
         }
 
         [HttpGet("visualizar-completa/{id:guid}")]
-        public VisualizarTarefaViewModel SelecionarPorId(Guid id) // D6E3F379-E6CE-4F6F-8C95-08DA9A4935DF
+        public ActionResult<VisualizarTarefaViewModel> SelecionarTarefaCompletaPorId(Guid id)
         {
             var tarefaResult = servicoTarefa.SelecionarPorId(id);
 
-            if (tarefaResult.IsSuccess)
+            if (tarefaResult.Errors.Any(x => x.Message.Contains("não encontrada")))
             {
-                var tarefaVM = new VisualizarTarefaViewModel();
-
-                var tarefa = tarefaResult.Value;
-
-                tarefaVM.Titulo = tarefa.Titulo;
-                tarefaVM.DataCriacao = tarefa.DataCriacao;
-                tarefaVM.DataConclusao = tarefa.DataConclusao;
-                tarefaVM.Prioridade = tarefa.Prioridade.GetDescription();
-                tarefaVM.Situacao = tarefa.PercentualConcluido == 100 ? "Concluído" : "Pendente";
-                tarefaVM.QuantidadeItens = tarefa.Itens.Count;
-                tarefaVM.PercentualConcluido = tarefa.PercentualConcluido;
-
-                foreach (var itemTarefa in tarefa.Itens)
+                return NotFound(new
                 {
-                    var itemVM = new VisualizarItemTarefaViewModel();
-                    itemVM.Titulo = itemTarefa.Titulo;
-                    itemVM.Situacao = itemTarefa.Concluido ? "Concluído" : "Pendente";
-
-                    tarefaVM.Itens.Add(itemVM);
-                }
-
-                return tarefaVM;
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
             }
 
+            if (tarefaResult.IsFailed)
+            {
+                return StatusCode(500, new
+                {
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
+            }
 
-            return null;
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorTarefas.Map<VisualizarTarefaViewModel>(tarefaResult.Value)
+            });
         }
 
         [HttpPost]
-        public FormsTarefaViewModel Inserir(FormsTarefaViewModel tarefaVM) //databinding - modelbinder
+        public ActionResult<FormsTarefaViewModel> Inserir(InserirTarefaViewModel tarefaVM)
         {
-            var tarefa = new Tarefa();
+            var listaErros = ModelState.Values
+                .SelectMany(x => x.Errors)
+                .Select(x => x.ErrorMessage);
 
-            tarefa.Titulo = tarefaVM.Titulo;
-            tarefa.Prioridade = tarefaVM.Prioridade;
-
-            foreach (var itemVM in tarefaVM.Itens)
+            if (listaErros.Any())
             {
-                var item = new ItemTarefa();
-
-                item.Titulo = itemVM.Titulo;
-
-                tarefa.AdicionarItem(item);
+                return BadRequest(new
+                {
+                    sucesso = false,
+                    erros = listaErros.ToList()
+                });
             }
+
+            var tarefa = mapeadorTarefas.Map<Tarefa>(tarefaVM);
 
             var tarefaResult = servicoTarefa.Inserir(tarefa);
 
-            if (tarefaResult.IsSuccess)
+            if (tarefaResult.IsFailed)
             {
-                return tarefaVM;
+                return StatusCode(500, new
+                {
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
             }
 
-            return null;
+            return Ok(new
+            {
+                sucesso = true,
+                dados = tarefaVM
+            });
         }
+
 
         [HttpPut("{id:guid}")]
-        public FormsTarefaViewModel Editar(Guid id, FormsTarefaViewModel tarefaVM)
+        public ActionResult<FormsTarefaViewModel> Editar(Guid id, EditarTarefaViewModel tarefaVM)
         {
-            var tarefaEditada = servicoTarefa.SelecionarPorId(id).Value;
+            var listaErros = ModelState.Values
+                .SelectMany(x => x.Errors)
+                .Select(x => x.ErrorMessage);
 
-            tarefaEditada.Titulo = tarefaVM.Titulo;
-            tarefaEditada.Prioridade = tarefaVM.Prioridade;
-
-            foreach (var itemVM in tarefaVM.Itens)
+            if (listaErros.Any())
             {
-                if (itemVM.Concluido)                
-                    tarefaEditada.ConcluirItem(itemVM.Id);
-                
-                else                
-                    tarefaEditada.MarcarPendente(itemVM.Id);                
+                return BadRequest(new
+                {
+                    sucesso = false,
+                    erros = listaErros.ToList()
+                });
             }
 
-            foreach (var itemVM in tarefaVM.Itens)
+            var tarefaResult = servicoTarefa.SelecionarPorId(id);
+
+            if (tarefaResult.Errors.Any(x => x.Message.Contains("não encontrada")))
             {
-                if (itemVM.Status == StatusItemTarefa.Adicionado)
+                return NotFound(new
                 {
-                    var item = new ItemTarefa(itemVM.Titulo);
-                    tarefaEditada.AdicionarItem(item);
-                }
-                else if (itemVM.Status == StatusItemTarefa.Removido)
-                {
-                    tarefaEditada.RemoverItem(itemVM.Id);
-                }
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
             }
 
-            var tarefaResult = servicoTarefa.Editar(tarefaEditada);
+            var tarefa = mapeadorTarefas.Map(tarefaVM, tarefaResult.Value);
 
-            if (tarefaResult.IsSuccess)
-                return tarefaVM;
+            tarefaResult = servicoTarefa.Editar(tarefa);
 
-            return null;
+            if (tarefaResult.IsFailed)
+            {
+                return StatusCode(500, new
+                {
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
+            }
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = tarefaVM
+            });
         }
 
+
         [HttpDelete("{id:guid}")]
-        public void Excluir(Guid id)
+        public ActionResult Excluir(Guid id)
         {
-            servicoTarefa.Excluir(id);
+            var tarefaResult = servicoTarefa.Excluir(id);
+
+            if (tarefaResult.Errors.Any(x => x.Message.Contains("não encontrada")))
+            {
+                return NotFound(new
+                {
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
+            }
+
+            if (tarefaResult.IsFailed)
+            {
+                return StatusCode(500, new
+                {
+                    sucesso = false,
+                    erros = tarefaResult.Errors.Select(x => x.Message)
+                });
+            }
+
+            return NoContent();
         }
     }
 }
