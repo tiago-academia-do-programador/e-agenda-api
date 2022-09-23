@@ -25,7 +25,7 @@ namespace eAgenda.Webapi.Controllers
             this.mapeadorTarefas = mapeadorTarefas;
         }
 
-        [HttpGet] //Action, Ação do Controlador, endpoint
+        [HttpGet] 
         public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos()
         {
             var tarefaResult = servicoTarefa.SelecionarTodos(StatusTarefaEnum.Todos);
