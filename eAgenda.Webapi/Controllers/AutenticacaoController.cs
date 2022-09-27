@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using eAgenda.Aplicacao.ModuloAutenticacao;
 using eAgenda.Dominio.ModuloAutenticacao;
-using eAgenda.Webapi.ViewModels;
 using eAgenda.Webapi.ViewModels.ModuloAutenticacao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -47,7 +45,7 @@ namespace eAgenda.Webapi.Controllers
 
         [HttpPost("autenticar")]
         public async Task<ActionResult> AutenticarUsuario(AutenticarUsuarioViewModel usuarioVM)
-        {            
+        {
             var usuarioResult = await servicoAutenticacao.AutenticarUsuario(usuarioVM.Email, usuarioVM.Senha);
 
             if (usuarioResult.IsFailed)
@@ -57,7 +55,7 @@ namespace eAgenda.Webapi.Controllers
             {
                 sucesso = true,
                 dados = GerarJwt(usuarioResult.Value)
-            }); 
+            });
         }
 
         private TokenViewModel GerarJwt(Usuario usuario)

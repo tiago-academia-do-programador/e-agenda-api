@@ -2,13 +2,10 @@
 using eAgenda.Aplicacao.ModuloTarefa;
 using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Webapi.ViewModels.ModuloTarefa;
-using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace eAgenda.Webapi.Controllers
 {
@@ -26,13 +23,13 @@ namespace eAgenda.Webapi.Controllers
             this.mapeadorTarefas = mapeadorTarefas;
         }
 
-        [HttpGet]        
+        [HttpGet]
         public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos()
         {
             var tarefaResult = servicoTarefa.SelecionarTodos(StatusTarefaEnum.Todos);
 
-            if (tarefaResult.IsFailed)            
-                return InternalError(tarefaResult);            
+            if (tarefaResult.IsFailed)
+                return InternalError(tarefaResult);
 
             return Ok(new
             {
@@ -40,7 +37,7 @@ namespace eAgenda.Webapi.Controllers
                 dados = mapeadorTarefas.Map<List<ListarTarefaViewModel>>(tarefaResult.Value)
             });
         }
-       
+
 
         [HttpGet("visualizar-completa/{id:guid}")]
         public ActionResult<VisualizarTarefaViewModel> SelecionarTarefaCompletaPorId(Guid id)
@@ -59,11 +56,11 @@ namespace eAgenda.Webapi.Controllers
                 dados = mapeadorTarefas.Map<VisualizarTarefaViewModel>(tarefaResult.Value)
             });
         }
-       
 
-        [HttpPost]        
+
+        [HttpPost]
         public ActionResult<FormsTarefaViewModel> Inserir(InserirTarefaViewModel tarefaVM)
-        {            
+        {
             var tarefa = mapeadorTarefas.Map<Tarefa>(tarefaVM);
 
             var tarefaResult = servicoTarefa.Inserir(tarefa);
@@ -81,7 +78,7 @@ namespace eAgenda.Webapi.Controllers
 
         [HttpPut("{id:guid}")]
         public ActionResult<FormsTarefaViewModel> Editar(Guid id, EditarTarefaViewModel tarefaVM)
-        {           
+        {
             var tarefaResult = servicoTarefa.SelecionarPorId(id);
 
             if (tarefaResult.IsFailed && RegistroNaoEncontrado(tarefaResult))
@@ -116,6 +113,6 @@ namespace eAgenda.Webapi.Controllers
             return NoContent();
         }
 
-       
+
     }
 }

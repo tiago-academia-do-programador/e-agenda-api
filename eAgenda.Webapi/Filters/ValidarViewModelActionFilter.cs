@@ -7,7 +7,7 @@ namespace eAgenda.Webapi.Filters
     public class ValidarViewModelActionFilter : IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
-        {            
+        {
             if (context.ModelState.IsValid == false)
             {
                 var listaErros = context.ModelState.Values
@@ -26,7 +26,7 @@ namespace eAgenda.Webapi.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            
+
         }
     }
 }

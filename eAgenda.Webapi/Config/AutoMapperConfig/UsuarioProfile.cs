@@ -12,6 +12,6 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
                 .ForMember(destino => destino.EmailConfirmed, opt => opt.MapFrom(origem => true))
                 .ForMember(destino => destino.UserName, opt => opt.MapFrom(origem => origem.Email));
 
-        }      
+        }
     }
 }

@@ -18,11 +18,11 @@ namespace eAgenda.Infra.Logging
                    .WriteTo.Console()
                    .CreateLogger();
 
-                   //.WriteTo.Debug()
+            //.WriteTo.Debug()
 
-                   //.WriteTo.Seq("http://localhost:5341")
-                   //.WriteTo.File(diretorioSaida + "/log.txt", rollingInterval: RollingInterval.Day,
-                   //         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+            //.WriteTo.Seq("http://localhost:5341")
+            //.WriteTo.File(diretorioSaida + "/log.txt", rollingInterval: RollingInterval.Day,
+            //         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
         }
     }
 }

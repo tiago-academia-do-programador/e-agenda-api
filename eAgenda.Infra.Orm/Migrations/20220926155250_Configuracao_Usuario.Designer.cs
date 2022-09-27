@@ -10,8 +10,8 @@ using eAgenda.Infra.Orm;
 namespace eAgenda.Infra.Orm.Migrations
 {
     [DbContext(typeof(eAgendaDbContext))]
-    [Migration("20220926155250_Configuracao_usuarios")]
-    partial class Configuracao_usuarios
+    [Migration("20220926155250_Configuracao_Usuario")]
+    partial class Configuracao_Usuario
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

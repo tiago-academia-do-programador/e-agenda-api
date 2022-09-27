@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace eAgenda.Infra.Orm
 {
-    public class eAgendaDbContext : 
+    public class eAgendaDbContext :
         IdentityDbContext<Usuario, IdentityRole<Guid>, Guid>, IContextoPersistencia
     {
         private string connectionString;

@@ -1,30 +1,25 @@
+using eAgenda.Aplicacao.ModuloAutenticacao;
 using eAgenda.Aplicacao.ModuloTarefa;
-using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Dominio;
+using eAgenda.Dominio.ModuloAutenticacao;
+using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infra.Configs;
-using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.Infra.Orm;
+using eAgenda.Infra.Orm.ModuloTarefa;
+using eAgenda.Webapi.Config.AutoMapperConfig;
+using eAgenda.Webapi.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eAgenda.Webapi.Config.AutoMapperConfig;
-using eAgenda.Webapi.Filters;
-using eAgenda.Aplicacao.ModuloAutenticacao;
-using eAgenda.Dominio.ModuloAutenticacao;
-using Microsoft.AspNetCore.Identity;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 namespace eAgenda.Webapi
 {
@@ -39,7 +34,7 @@ namespace eAgenda.Webapi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
 
             services.Configure<ApiBehaviorOptions>(config =>
             {
@@ -50,16 +45,16 @@ namespace eAgenda.Webapi
             {
                 config.AddProfile<TarefaProfile>();
                 config.AddProfile<UsuarioProfile>();
-            });           
+            });
 
             services.AddSingleton((x) => new ConfiguracaoAplicacaoeAgenda().ConnectionStrings);
 
             services.AddScoped<eAgendaDbContext>();
 
             services.AddScoped<IContextoPersistencia, eAgendaDbContext>();
-            
+
             services.AddIdentity<Usuario, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<eAgendaDbContext>()                
+                .AddEntityFrameworkStores<eAgendaDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddTransient<UserManager<Usuario>>();
@@ -70,7 +65,7 @@ namespace eAgenda.Webapi
             services.AddTransient<ServicoTarefa>();
             services.AddTransient<ServicoAutenticacao>();
 
-            services.AddControllers( config =>
+            services.AddControllers(config =>
             {
                 config.Filters.Add(new ValidarViewModelActionFilter());
             });

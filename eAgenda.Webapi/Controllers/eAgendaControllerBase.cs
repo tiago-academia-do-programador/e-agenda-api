@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace eAgenda.Webapi.Controllers
     [ApiController]
     public abstract class eAgendaControllerBase : ControllerBase
     {
-        
+
         protected ActionResult InternalError<T>(Result<T> registroResult)
         {
             return StatusCode(500, new
@@ -41,6 +40,6 @@ namespace eAgenda.Webapi.Controllers
             return registroResult.Errors.Any(x => x.Message.Contains("não encontrada"));
         }
 
-        
+
     }
 }

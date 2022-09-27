@@ -79,7 +79,7 @@ namespace eAgenda.Aplicacao.ModuloAutenticacao
         }
 
         public async Task<Result<Usuario>> Sair(string email)
-        {            
+        {
             await signInManager.SignOutAsync();
 
             Log.Logger.Debug("Sessão do usuário {@email} removida...", email);
