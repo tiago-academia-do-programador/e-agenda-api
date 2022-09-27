@@ -54,7 +54,7 @@ namespace eAgenda.Webapi
             services.AddScoped<IContextoPersistencia, eAgendaDbContext>();
 
             services.AddIdentity<Usuario, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<eAgendaDbContext>()
+                .AddEntityFrameworkStores<eAgendaDbContext>()                
                 .AddDefaultTokenProviders();
 
             services.AddTransient<UserManager<Usuario>>();
