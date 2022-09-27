@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using eAgenda.Aplicacao.ModuloTarefa;
 using eAgenda.Dominio.ModuloTarefa;
-using eAgenda.Webapi.ViewModels;
+using eAgenda.Webapi.ViewModels.ModuloTarefa;
 using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace eAgenda.Webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
     public class TarefasController : eAgendaControllerBase
     {
         private readonly ServicoTarefa servicoTarefa;
@@ -25,7 +26,7 @@ namespace eAgenda.Webapi.Controllers
             this.mapeadorTarefas = mapeadorTarefas;
         }
 
-        [HttpGet] 
+        [HttpGet]        
         public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos()
         {
             var tarefaResult = servicoTarefa.SelecionarTodos(StatusTarefaEnum.Todos);

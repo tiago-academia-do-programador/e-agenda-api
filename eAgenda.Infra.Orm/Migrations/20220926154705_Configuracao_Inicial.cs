@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eAgenda.Infra.Orm.Migrations
 {
-    public partial class Configurao_Inicial : Migration
+    public partial class Configuracao_Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -18,7 +18,7 @@ namespace eAgenda.Webapi
             {
                 CreateHostBuilder(args).Build().Run();
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 Log.Logger.Fatal(exc, "O servidor da aplicação e-Agenda parou inesperadamente.");
             }

@@ -10,8 +10,8 @@ using eAgenda.Infra.Orm;
 namespace eAgenda.Infra.Orm.Migrations
 {
     [DbContext(typeof(eAgendaDbContext))]
-    [Migration("20220919141336_Configurao_Inicial")]
-    partial class Configurao_Inicial
+    [Migration("20220926154705_Configuracao_Inicial")]
+    partial class Configuracao_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
