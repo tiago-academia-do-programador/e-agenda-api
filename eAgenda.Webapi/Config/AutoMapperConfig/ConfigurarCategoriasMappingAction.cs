@@ -4,11 +4,11 @@ using eAgenda.Webapi.ViewModels.ModuloDespesa;
 
 namespace eAgenda.Webapi.Config.AutoMapperConfig
 {
-    public class ConfigurarCategoriasAction : IMappingAction<FormsDespesaViewModel, Despesa>
+    public class ConfigurarCategoriasMappingAction : IMappingAction<FormsDespesaViewModel, Despesa>
     {
         private readonly IRepositorioCategoria repositorioCategoria;
 
-        public ConfigurarCategoriasAction(IRepositorioCategoria repositorioCategoria)
+        public ConfigurarCategoriasMappingAction(IRepositorioCategoria repositorioCategoria)
         {
             this.repositorioCategoria = repositorioCategoria;
         }

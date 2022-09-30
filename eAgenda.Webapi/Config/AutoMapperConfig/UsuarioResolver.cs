@@ -14,14 +14,15 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public Guid Resolve(object source, object destination, Guid destMember, ResolutionContext context)
+        public Guid Resolve(object source, object destination, 
+            Guid destMember, ResolutionContext context)
         {
-            var id = httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var id = httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(id))
-                throw new InvalidOperationException("Id do usuário não encontrado");
+                throw new InvalidOperationException("O id do usuário não foi encontrado no token");
 
-            return Guid.Parse(id);            
+            return Guid.Parse(id);
         }
     }
 }

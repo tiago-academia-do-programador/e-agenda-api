@@ -12,7 +12,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
         {
             CreateMap<FormsDespesaViewModel, Despesa>()
                 .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>())
-                .AfterMap<ConfigurarCategoriasAction>();
+                .AfterMap<ConfigurarCategoriasMappingAction>();
 
             CreateMap<Despesa, ListarDespesaViewModel>()
                 .ForMember(destino => destino.FormaPagamento, opt => opt.MapFrom(origem => origem.FormaPagamento.GetDescription()));
