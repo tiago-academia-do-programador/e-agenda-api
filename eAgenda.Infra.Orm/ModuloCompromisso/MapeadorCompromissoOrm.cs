@@ -25,7 +25,7 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Contato)
-                .WithMany()
+                .WithMany(x => x.Compromissos)
                 .IsRequired(false)
                 .HasForeignKey(x => x.ContatoId)
                 .OnDelete(DeleteBehavior.NoAction);

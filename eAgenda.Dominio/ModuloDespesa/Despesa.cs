@@ -52,10 +52,7 @@ namespace eAgenda.Dominio.ModuloDespesa
 
         public void RemoverCategoria(Categoria categoria)
         {
-            if (Categorias.Contains(categoria))
-            {
-                Categorias.Remove(categoria);
-            }
+            Categorias.Remove(categoria);
         }
     }
 }

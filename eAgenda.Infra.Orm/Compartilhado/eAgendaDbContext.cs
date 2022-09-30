@@ -1,6 +1,7 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloAutenticacao;
 using eAgenda.Infra.Configs;
+using eAgenda.Infra.Orm.ModuloTarefa;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace eAgenda.Infra.Orm
 {
@@ -72,7 +74,9 @@ namespace eAgenda.Infra.Orm
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var dllComConfiguracoesOrm = typeof(eAgendaDbContext).Assembly;
+            Type tipo = typeof(eAgendaDbContext);
+
+            Assembly dllComConfiguracoesOrm = tipo.Assembly;
 
             modelBuilder.ApplyConfigurationsFromAssembly(dllComConfiguracoesOrm);
 

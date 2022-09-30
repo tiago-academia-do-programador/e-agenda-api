@@ -35,7 +35,9 @@ namespace eAgenda.Infra.Orm.ModuloContato
 
         public Contato SelecionarPorId(Guid id)
         {
-            return contatos.SingleOrDefault(x => x.Id == id);
+            return contatos                
+                .Include(x => x.Compromissos)
+                .SingleOrDefault(x => x.Id == id);
         }
 
         public List<Contato> SelecionarTodos(bool incluirMateriasEhQuestoes)

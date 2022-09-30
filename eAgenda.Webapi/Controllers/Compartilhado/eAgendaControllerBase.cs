@@ -3,15 +3,14 @@ using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
 
-namespace eAgenda.Webapi.Controllers
+namespace eAgenda.Webapi.Controllers.Compartilhado
 {
     [ApiController]
     public abstract class eAgendaControllerBase : ControllerBase
     {
-        private UsuarioTokenViewModel usuario;       
+        private UsuarioTokenViewModel usuario;
 
         public UsuarioTokenViewModel UsuarioLogado
         {
@@ -72,7 +71,7 @@ namespace eAgenda.Webapi.Controllers
 
         protected static bool RegistroNaoEncontrado<T>(Result<T> registroResult)
         {
-            return registroResult.Errors.Any(x => x.Message.Contains("não encontrada"));
+            return registroResult.Errors.Any(x => x.Message.Contains("não encontrad"));
         }
 
         private bool EstaAutenticado()

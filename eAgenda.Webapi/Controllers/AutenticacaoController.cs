@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eAgenda.Aplicacao.ModuloAutenticacao;
 using eAgenda.Dominio.ModuloAutenticacao;
+using eAgenda.Webapi.Controllers.Compartilhado;
 using eAgenda.Webapi.ViewModels.ModuloAutenticacao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -68,12 +69,13 @@ namespace eAgenda.Webapi.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("SegredoSuperSecretoDoeAgenda");
+            DateTime dataExpiracao = DateTime.UtcNow.AddHours(8);
             var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = "eAgenda",
                 Audience = "http://localhost",
                 Subject = identityClaims,
-                Expires = DateTime.UtcNow.AddHours(8),
+                Expires = dataExpiracao,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
@@ -82,6 +84,7 @@ namespace eAgenda.Webapi.Controllers
             var response = new TokenViewModel
             {
                 Chave = encodedToken,
+                DataExpiracacao = dataExpiracao,
                 UsuarioToken = new UsuarioTokenViewModel
                 {
                     Id = usuario.Id,

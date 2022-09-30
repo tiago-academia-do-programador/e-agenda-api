@@ -19,16 +19,6 @@ namespace eAgenda.Aplicacao.ModuloDespesa
             this.contextoPersistencia = contexto;
         }
 
-        public Result<Despesa> Inserir(Despesa despesa, List<Categoria> categorias)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result<Despesa> Editar(Despesa despesa, List<Categoria> categorias1, List<Categoria> categorias2)
-        {
-            throw new NotImplementedException();
-        }
-
         public Result<Despesa> Inserir(Despesa despesa)
         {
             Log.Logger.Debug("Tentando inserir despesa... {@d}", despesa);
@@ -115,6 +105,16 @@ namespace eAgenda.Aplicacao.ModuloDespesa
 
                 return Result.Fail(msgErro);
             }
+        }
+
+        public Result Excluir(Guid id)
+        {
+            var despesaResult = SelecionarPorId(id);
+
+            if (despesaResult.IsSuccess)
+                return Excluir(despesaResult.Value);
+
+            return Result.Fail(despesaResult.Errors);
         }
 
         public Result<List<Despesa>> SelecionarTodos()

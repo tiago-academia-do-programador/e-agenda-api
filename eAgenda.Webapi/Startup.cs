@@ -1,26 +1,10 @@
-using eAgenda.Aplicacao.ModuloAutenticacao;
-using eAgenda.Aplicacao.ModuloTarefa;
-using eAgenda.Dominio;
-using eAgenda.Dominio.ModuloAutenticacao;
-using eAgenda.Dominio.ModuloTarefa;
-using eAgenda.Infra.Configs;
-using eAgenda.Infra.Orm;
-using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.Webapi.Config;
-using eAgenda.Webapi.Config.AutoMapperConfig;
-using eAgenda.Webapi.Filters;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Text;
 
 namespace eAgenda.Webapi
 {
@@ -40,6 +24,8 @@ namespace eAgenda.Webapi
             {
                 config.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddHttpContextAccessor();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -77,8 +63,5 @@ namespace eAgenda.Webapi
                 endpoints.MapControllers();
             });
         }
-
     }
-
-    
 }

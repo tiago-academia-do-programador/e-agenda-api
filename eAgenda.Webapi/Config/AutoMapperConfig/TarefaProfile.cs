@@ -16,6 +16,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
         private void ConverterDeViewModelParaEntidade()
         {
             CreateMap<InserirTarefaViewModel, Tarefa>()
+                .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>())
                 .ForMember(destino => destino.Itens, opt => opt.Ignore())
                 .AfterMap((viewModel, tarefa) =>
                 {
@@ -34,6 +35,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
 
 
             CreateMap<EditarTarefaViewModel, Tarefa>()
+                .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>())
                .ForMember(destino => destino.Itens, opt => opt.Ignore())
                .AfterMap((viewModel, tarefa) =>
                {

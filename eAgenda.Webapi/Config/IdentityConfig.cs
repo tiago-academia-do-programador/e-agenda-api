@@ -1,4 +1,5 @@
-﻿using eAgenda.Dominio.ModuloAutenticacao;
+﻿using eAgenda.Aplicacao.ModuloAutenticacao;
+using eAgenda.Dominio.ModuloAutenticacao;
 using eAgenda.Infra.Orm;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace eAgenda.Webapi.Config
 
             services.AddTransient<UserManager<Usuario>>();
             services.AddTransient<SignInManager<Usuario>>();
+            services.AddTransient<ServicoAutenticacao>();
         }
     }
 

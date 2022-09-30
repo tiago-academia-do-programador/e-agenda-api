@@ -13,10 +13,10 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
         private IContextoPersistencia contextoPersistencia;
 
         public ServicoCompromisso(IRepositorioCompromisso repositorioCompromisso,
-                             IContextoPersistencia contexto)
+                             IContextoPersistencia contextoPersistencia)
         {
             this.repositorioCompromisso = repositorioCompromisso;
-            this.contextoPersistencia = contexto;
+            this.contextoPersistencia = contextoPersistencia;
         }
 
         public Result<Compromisso> Inserir(Compromisso compromisso)
@@ -107,6 +107,16 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
             }
         }
 
+        public Result Excluir(Guid id)
+        {
+            var compromissoResult = SelecionarPorId(id);
+
+            if (compromissoResult.IsSuccess)
+                return Excluir(compromissoResult.Value);
+
+            return Result.Fail(compromissoResult.Errors);
+        }
+
         public Result<List<Compromisso>> SelecionarTodos()
         {
             Log.Logger.Debug("Tentando selecionar compromissos...");
@@ -158,14 +168,15 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
             }
         }
 
-        public Result<List<Compromisso>> SelecionarCompromissosPassados(DateTime now)
+
+        public Result<List<Compromisso>> SelecionarCompromissosPassados(DateTime hoje)
         {
-            return SelecionarTodos();
+            return repositorioCompromisso.SelecionarCompromissosPassados(hoje);
         }
 
         public Result<List<Compromisso>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
-            return SelecionarTodos();
+            return repositorioCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal);
         }
     }
 }

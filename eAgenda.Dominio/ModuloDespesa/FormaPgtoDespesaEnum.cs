@@ -1,8 +1,15 @@
-﻿namespace eAgenda.Dominio.ModuloDespesa
+﻿using System.ComponentModel;
+
+namespace eAgenda.Dominio.ModuloDespesa
 {
     public enum FormaPgtoDespesaEnum
-    {
-        PIX, Dinheiro, CartaoCredito
+    {        
+        PIX, 
+        
+        Dinheiro,
+
+        [Description("Cartão de Crédito")]
+        CartaoCredito
     }
 
 }
