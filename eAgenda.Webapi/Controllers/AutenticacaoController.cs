@@ -73,7 +73,7 @@ namespace eAgenda.Webapi.Controllers
             var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = "eAgenda",
-                Audience = "https://eagendaweb.azurewebsites.net", 
+                Audience = "http://localhost",
                 Subject = identityClaims,
                 Expires = dataExpiracao,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
