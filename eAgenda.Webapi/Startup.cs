@@ -61,8 +61,6 @@ namespace eAgenda.Webapi
 
             app.UseCors("Desenvolvimento");
 
-            //app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
