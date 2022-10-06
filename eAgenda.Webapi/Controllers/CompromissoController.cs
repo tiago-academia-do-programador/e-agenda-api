@@ -39,7 +39,7 @@ namespace eAgenda.Webapi.Controllers
             });
         }
 
-        [HttpGet, Route("entre/{dataInicial:datetime}/{dataFinal:datetime}")]
+        [HttpGet, Route("entre/{dataInicial:datetime}={dataFinal:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
             var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal);

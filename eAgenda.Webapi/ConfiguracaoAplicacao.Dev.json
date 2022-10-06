@@ -8,5 +8,4 @@
   "ConnectionStrings": {
     "SqlServer": "Data Source=(LOCALDB)\\MSSQLLOCALDB;Initial Catalog=eAgendaOrm;Integrated Security=True"
   }
-
 }

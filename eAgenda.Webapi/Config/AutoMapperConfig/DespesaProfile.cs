@@ -21,6 +21,9 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
                 .ForMember(destino => destino.FormaPagamento, opt => opt.MapFrom(origem => origem.FormaPagamento.GetDescription()))
                 .ForMember(destino => destino.Categorias, opt =>
                     opt.MapFrom(origem => origem.Categorias.Select(x => x.Titulo)));
+
+
+            CreateMap<Despesa, FormsDespesaViewModel>();                        
         }
     }
 }
