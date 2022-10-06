@@ -40,11 +40,11 @@ namespace eAgenda.Webapi
             services.ConfigurarJwt();
 
             services.AddCors(options =>
-            {
+            {               
                 options.AddPolicy("Desenvolvimento",
                     services =>
                         services
-                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });

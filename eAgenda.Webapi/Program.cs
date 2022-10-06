@@ -1,4 +1,5 @@
 using eAgenda.Infra.Logging;
+using eAgenda.Infra.Orm;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -11,6 +12,7 @@ namespace eAgenda.Webapi
         public static void Main(string[] args)
         {
             ConfiguracaoLogseAgenda.ConfigurarEscritaLogs();
+            MigradorBancoDadoseAgenda.AtualizarBancoDados();
 
             Log.Logger.Information("Iniciando o servidor da aplicação e-Agenda...");
 
