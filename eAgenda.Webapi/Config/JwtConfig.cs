@@ -25,7 +25,7 @@ namespace eAgenda.Webapi.Config
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidAudience = "http://localhost",
+                    ValidAudience = "https://eagendaweb.azurewebsites.net", 
                     ValidIssuer = "eAgenda"
                 };
             });
