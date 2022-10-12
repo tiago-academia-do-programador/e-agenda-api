@@ -1,4 +1,5 @@
-﻿using eAgenda.Infra.Configs;
+﻿using Azure.Storage.Blobs;
+using eAgenda.Infra.Configs;
 using Serilog;
 using Serilog.Events;
 
@@ -8,14 +9,19 @@ namespace eAgenda.Infra.Logging
     {
         public static void ConfigurarEscritaLogs()
         {
-            var config = new ConfiguracaoAplicacaoeAgenda();
+            var connectionString = 
+                "DefaultEndpointsProtocol=https;AccountName=eagendabloblogging;AccountKey=YDCnFhxJ21ffjUSR7OBYR48dIpPthU/N4di1IQjvDcEkqxqgPzCSI0XDv5SXuBVEJgp1IhKdrCVC+AStqyjIsw==;EndpointSuffix=core.windows.net";
 
-            var diretorioSaida = config.ConfiguracaoLogs.DiretorioSaida;
+            var x = new BlobServiceClient(connectionString);
+
+            //var config = new ConfiguracaoAplicacaoeAgenda();
+
+            //var diretorioSaida = config.ConfiguracaoLogs.DiretorioSaida;
 
             Log.Logger = new LoggerConfiguration()
                    .MinimumLevel.Override("Microsoft", LogEventLevel.Information).Enrich.FromLogContext()
                    .MinimumLevel.Debug()
-                   .WriteTo.Console()
+                   .WriteTo.AzureBlobStorage(x, storageFileName: "{yyyy}/{MM}/{dd}/log.txt")
                    .CreateLogger();
 
             //.WriteTo.Debug()

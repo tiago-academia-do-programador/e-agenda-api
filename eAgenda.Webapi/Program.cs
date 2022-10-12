@@ -11,6 +11,7 @@ namespace eAgenda.Webapi
     {
         public static void Main(string[] args)
         {
+            ConfiguracaoLogseAgenda.ConfigurarEscritaLogs();
             MigradorBancoDadoseAgenda.AtualizarBancoDados();
 
             Log.Logger.Information("Iniciando o servidor da aplicação e-Agenda...");
