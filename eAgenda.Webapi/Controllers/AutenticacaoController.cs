@@ -59,6 +59,18 @@ namespace eAgenda.Webapi.Controllers
             });
         }
 
+        [HttpPost("sair")]
+        public async Task<ActionResult> Sair()
+        {
+            await servicoAutenticacao.Sair(UsuarioLogado.Email);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = $"Sessão do usuário {UsuarioLogado.Email} removida com sucesso"
+            });
+        }
+
         private TokenViewModel GerarJwt(Usuario usuario)
         {
             var identityClaims = new ClaimsIdentity();
