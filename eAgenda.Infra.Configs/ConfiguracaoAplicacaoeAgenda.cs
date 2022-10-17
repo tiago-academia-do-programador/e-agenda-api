@@ -12,7 +12,19 @@ namespace eAgenda.Infra.Configs
                 .AddJsonFile("ConfiguracaoAplicacao.json")
                 .Build();
 
-            var connectionString = configuracao.GetConnectionString("SqlServer");
+            //configuracao.GetConnectionString("SqlServer");
+
+            var connectionString =
+                "Server=tcp:eagenda.database.windows.net,1433;" +
+                "Initial Catalog=eAgendaDb;" +
+                "Persist Security Info=False;" +
+                "User ID=rech;" +
+                "Password=Helen@2014;" +
+                "MultipleActiveResultSets=False;" +
+                "Encrypt=True;" +
+                "TrustServerCertificate=False;" +
+                "Connection Timeout=30;";
+
 
             ConnectionStrings = new ConnectionStrings { SqlServer = connectionString };
 
