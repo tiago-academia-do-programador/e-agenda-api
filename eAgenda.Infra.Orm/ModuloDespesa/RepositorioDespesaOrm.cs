@@ -1,58 +1,23 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloDespesa
 {
-    public class RepositorioDespesaOrm : IRepositorioDespesa
+    public class RepositorioDespesaOrm : RepositorioBase<Despesa>, IRepositorioDespesa
     {
-        private DbSet<Despesa> despesas;
-        private readonly eAgendaDbContext dbContext;
-
-        public RepositorioDespesaOrm(IContextoPersistencia contextoPersistencia)
+        public RepositorioDespesaOrm(IContextoPersistencia contextoPersistencia) : base(contextoPersistencia)
         {
-            dbContext = (eAgendaDbContext)contextoPersistencia;
-            despesas = dbContext.Set<Despesa>();
         }
 
-        public void Inserir(Despesa novoRegistro)
+        public override Despesa SelecionarPorId(Guid id)
         {
-            despesas.Add(novoRegistro);
-        }
-
-        public void Inserir(Despesa novoRegistro, List<Categoria> categoriasMarcadas)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Editar(Despesa novoRegistro, List<Categoria> categoriasMarcadas, List<Categoria> categoriasDesmarcadas)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Editar(Despesa registro)
-        {
-            despesas.Update(registro);
-        }
-
-        public void Excluir(Despesa registro)
-        {
-            despesas.Remove(registro);
-        }
-
-        public Despesa SelecionarPorId(Guid id)
-        {
-            return despesas
+            return registros
                 .Include(x => x.Categorias)
                 .SingleOrDefault(x => x.Id == id);
-        }
-
-        public List<Despesa> SelecionarTodos()
-        {
-            return despesas.ToList();
         }
     }
 }

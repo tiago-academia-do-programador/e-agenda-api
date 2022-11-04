@@ -9,6 +9,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
         public ContatoProfile()
         {
             CreateMap<FormsContatoViewModel, Contato>()
+                .ForMember(destino => destino.Id, opt => opt.Ignore())
                 .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>());
 
             CreateMap<Contato, ListarContatoViewModel>();

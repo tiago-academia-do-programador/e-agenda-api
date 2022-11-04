@@ -1,11 +1,11 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloAutenticacao;
-using eAgenda.Infra.Configs;
-using eAgenda.Infra.Orm.ModuloTarefa;
+//using eAgenda.Infra.Configs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
@@ -17,12 +17,17 @@ namespace eAgenda.Infra.Orm
     public class eAgendaDbContext :
         IdentityDbContext<Usuario, IdentityRole<Guid>, Guid>, IContextoPersistencia
     {
-        private string connectionString;
+        //private string connectionString;
 
-        public eAgendaDbContext(ConnectionStrings connectionStrings)
+        //public eAgendaDbContext(ConnectionStrings connectionStrings)
+        //{
+        //    this.connectionString = connectionStrings.SqlServer;
+        //}
+
+        public eAgendaDbContext(DbContextOptions options) : base(options)
         {
-            this.connectionString = connectionStrings.SqlServer;
-        }
+            //this.connectionString = ((SqlServerOptionsExtension)options.Extensions.First()).ConnectionString;            
+        }    
 
         public void GravarDados()
         {
@@ -60,7 +65,7 @@ namespace eAgenda.Infra.Orm
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            //optionsBuilder.UseSqlServer(connectionString);
 
             ILoggerFactory loggerFactory = LoggerFactory.Create((x) =>
             {

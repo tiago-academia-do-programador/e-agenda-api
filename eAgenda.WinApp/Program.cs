@@ -14,8 +14,8 @@ namespace eAgenda.WinApp
         [STAThread]
         static void Main()
         {
-            MigradorBancoDadoseAgenda.AtualizarBancoDados();
-            ConfiguracaoLogseAgenda.ConfigurarEscritaLogs();
+            //MigradorBancoDadoseAgenda.AtualizarBancoDados();
+            //ConfiguracaoLogsLocal.ConfigurarEscritaLogs();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -1,5 +1,6 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloTarefa;
+using eAgenda.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,58 +8,34 @@ using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloTarefa
 {
-    public class RepositorioTarefaOrm : IRepositorioTarefa
+    public class RepositorioTarefaOrm : RepositorioBase<Tarefa>, IRepositorioTarefa
     {
-        private DbSet<Tarefa> tarefas;
-        private readonly eAgendaDbContext dbContext;
-
-        public RepositorioTarefaOrm(IContextoPersistencia contextoPersistencia)
+      
+        public RepositorioTarefaOrm(IContextoPersistencia contextoPersistencia) : base (contextoPersistencia)
         {
-            dbContext = (eAgendaDbContext)contextoPersistencia;
-            tarefas = dbContext.Set<Tarefa>();
         }
 
-        public void Inserir(Tarefa novoRegistro)
+        public override Tarefa SelecionarPorId(Guid id)
         {
-            tarefas.Add(novoRegistro);
-        }
-
-        public void Editar(Tarefa registro)
-        {
-            tarefas.Update(registro);
-        }
-
-        public void Excluir(Tarefa registro)
-        {
-            tarefas.Remove(registro);
-        }
-
-        public Tarefa SelecionarPorId(Guid id)
-        {
-            return tarefas
+            return registros
                 .Include(x => x.Itens)
                 .SingleOrDefault(x => x.Id == id);
-        }
-
-        public List<Tarefa> SelecionarTodos()
-        {
-            return tarefas.ToList();
         }
 
         public List<Tarefa> SelecionarTodos(StatusTarefaEnum status, Guid usuarioId = new Guid())
         {
             if (status == StatusTarefaEnum.Concluidas)
-                return tarefas
+                return registros
                     .Where(x => x.UsuarioId.Equals(usuarioId))
                     .Where(x => x.PercentualConcluido == 100).ToList();
 
             else if (status == StatusTarefaEnum.Pendentes)
-                return tarefas
+                return registros
                     .Where(x => x.UsuarioId.Equals(usuarioId))
                     .Where(x => x.PercentualConcluido < 100).ToList();
 
             else
-                return tarefas
+                return registros
                     .Where(x => x.UsuarioId.Equals(usuarioId))
                     .ToList();
         }

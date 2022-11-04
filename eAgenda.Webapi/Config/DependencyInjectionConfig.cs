@@ -7,24 +7,27 @@ using eAgenda.Dominio.ModuloCompromisso;
 using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Dominio.ModuloTarefa;
-using eAgenda.Infra.Configs;
+//using eAgenda.Infra.Configs;
 using eAgenda.Infra.Orm;
 using eAgenda.Infra.Orm.ModuloCompromisso;
 using eAgenda.Infra.Orm.ModuloContato;
 using eAgenda.Infra.Orm.ModuloDespesa;
 using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.Webapi.Config.AutoMapperConfig;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace eAgenda.Webapi.Config
 {
     public static class DependencyInjectionConfig
     {
-        public static void ConfigurarInjecaoDependencia(this IServiceCollection services)
+        public static void ConfigurarInjecaoDependencia(this IServiceCollection services, IConfiguration configuracao)
         {
-            services.AddSingleton((x) => new ConfiguracaoAplicacaoeAgenda().ConnectionStrings);
-
-            services.AddScoped<eAgendaDbContext>();
+            services.AddDbContext<eAgendaDbContext>(opt =>
+            {
+                opt.UseSqlServer(configuracao.GetConnectionString("SqlServer"));                
+            });
 
             services.AddScoped<IContextoPersistencia, eAgendaDbContext>();
 

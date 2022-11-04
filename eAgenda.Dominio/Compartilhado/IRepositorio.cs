@@ -11,7 +11,7 @@ namespace eAgenda.Dominio.Compartilhado
 
         void Excluir(T registro);
 
-        List<T> SelecionarTodos();
+        List<T> SelecionarTodos(Guid usuarioId = new Guid());
 
         T SelecionarPorId(Guid numero);
     }

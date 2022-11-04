@@ -27,7 +27,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet]
         public ActionResult<List<ListarDespesaViewModel>> SelecionarTodos()
         {
-            var despesaResult = servicoDespesa.SelecionarTodos();
+            var despesaResult = servicoDespesa.SelecionarTodos(UsuarioLogado.Id);
 
             if (despesaResult.IsFailed)
                 return InternalError(despesaResult);

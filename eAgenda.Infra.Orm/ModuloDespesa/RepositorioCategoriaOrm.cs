@@ -1,49 +1,23 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloDespesa
 {
-    public class RepositorioCategoriaOrm : IRepositorioCategoria
-    {
-        private DbSet<Categoria> categorias;
-        private readonly eAgendaDbContext dbContext;
-
-        public RepositorioCategoriaOrm(IContextoPersistencia contextoPersistencia)
-        {
-            dbContext = (eAgendaDbContext)contextoPersistencia;
-            categorias = dbContext.Set<Categoria>();
+    public class RepositorioCategoriaOrm : RepositorioBase<Categoria>, IRepositorioCategoria
+    {       
+        public RepositorioCategoriaOrm(IContextoPersistencia contextoPersistencia) : base(contextoPersistencia)
+        {            
         }
 
-        public void Inserir(Categoria novoRegistro)
+        public override Categoria SelecionarPorId(Guid id)
         {
-            categorias.Add(novoRegistro);
-        }
-
-        public void Editar(Categoria registro)
-        {
-            categorias.Update(registro);
-        }
-
-        public void Excluir(Categoria registro)
-        {
-            categorias.Remove(registro);
-        }
-
-        public Categoria SelecionarPorId(Guid id)
-        {
-            return categorias
+            return registros
                 .Include(x => x.Despesas)
                 .SingleOrDefault(x => x.Id == id);
         }
-
-        public List<Categoria> SelecionarTodos()
-        {
-            return categorias.ToList();
-        }
-
     }
 }

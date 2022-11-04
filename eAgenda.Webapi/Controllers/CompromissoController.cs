@@ -27,7 +27,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarTodos()
         {
-            var compromissoResult = servicoCompromisso.SelecionarTodos();
+            var compromissoResult = servicoCompromisso.SelecionarTodos(UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);
@@ -42,7 +42,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("entre/{dataInicial:datetime}={dataFinal:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
-            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal, UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);
@@ -57,7 +57,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("passados/{dataAtual:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosPassados(DateTime dataAtual)
         {
-            var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual, UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);
@@ -108,7 +108,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpPost]
         public ActionResult<FormsCompromissoViewModel> Inserir(FormsCompromissoViewModel compromissoVM)
         {
-            var compromisso = mapeadorCompromissos.Map<Compromisso>(compromissoVM);
+            var compromisso = mapeadorCompromissos.Map<Compromisso>(compromissoVM);            
 
             var compromissoResult = servicoCompromisso.Inserir(compromisso);
 

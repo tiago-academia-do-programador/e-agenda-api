@@ -10,6 +10,22 @@ namespace eAgenda.Webapi
 {
     public class Startup
     {
+        public Startup(IWebHostEnvironment hostEnvironment)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("ConfiguracaoAplicacao.json", true, true)
+                .AddJsonFile($"ConfiguracaoAplicacao.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
+            if (hostEnvironment.IsDevelopment())
+            {
+                
+            }
+
+            Configuration = builder.Build();
+        }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,7 +45,7 @@ namespace eAgenda.Webapi
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.ConfigurarInjecaoDependencia();
+            services.ConfigurarInjecaoDependencia(Configuration);
 
             services.ConfigurarAutenticacao();
 

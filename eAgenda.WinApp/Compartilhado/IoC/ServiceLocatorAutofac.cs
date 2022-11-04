@@ -10,7 +10,7 @@ using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Dominio.ModuloTarefa;
 
-using eAgenda.Infra.Configs;
+//using eAgenda.Infra.Configs;
 
 using eAgenda.Infra.Orm;
 using eAgenda.Infra.Orm.ModuloCompromisso;
@@ -23,6 +23,10 @@ using eAgenda.WinApp.ModuloContato;
 using eAgenda.WinApp.ModuloDespesa;
 using eAgenda.WinApp.ModuloTarefa;
 
+using Microsoft.Extensions.Configuration;
+
+using System.IO;
+
 namespace eAgenda.WinApp.Compartilhado.Ioc
 {
     public class ServiceLocatorAutofac : IServiceLocator
@@ -33,12 +37,17 @@ namespace eAgenda.WinApp.Compartilhado.Ioc
         {
             var builder = new ContainerBuilder();
 
-            builder.Register((x) => new ConfiguracaoAplicacaoeAgenda().ConnectionStrings)
-                .As<ConnectionStrings>()
-                .SingleInstance(); //Singleton
+            IConfiguration configuracao = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("ConfiguracaoAplicacao.json")
+               .Build();
 
-            builder.RegisterType<ConfiguracaoAplicacaoeAgenda>()
-                .SingleInstance(); //Singleton
+            //builder.Register((x) => new ConfiguracaoAplicacaoeAgenda(configuracao).ConnectionStrings)
+            //    .As<ConnectionStrings>()
+            //    .SingleInstance(); //Singleton
+
+            //builder.RegisterType<ConfiguracaoAplicacaoeAgenda>()
+            //    .SingleInstance(); //Singleton
 
             builder.RegisterType<eAgendaDbContext>().As<IContextoPersistencia>()
                 .InstancePerLifetimeScope(); //Scoped

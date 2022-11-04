@@ -1,5 +1,5 @@
-﻿using eAgenda.Infra.Configs;
-using eAgenda.Infra.Orm;
+﻿using eAgenda.Infra.Orm;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace GeradorTestes.Infra.Orm
@@ -8,9 +8,11 @@ namespace GeradorTestes.Infra.Orm
     {
         public eAgendaDbContext CreateDbContext(string[] args)
         {
-            var config = new ConfiguracaoAplicacaoeAgenda();
+            var builder = new DbContextOptionsBuilder<eAgendaDbContext>();
 
-            return new eAgendaDbContext(config.ConnectionStrings);
+            builder.UseSqlServer(@"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=eAgendaOrm;Integrated Security=True");
+
+            return new eAgendaDbContext(builder.Options);
         }
     }
 }

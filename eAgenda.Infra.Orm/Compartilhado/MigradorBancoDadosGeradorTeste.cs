@@ -1,21 +1,20 @@
-﻿using eAgenda.Infra.Configs;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm
 {
     public static class MigradorBancoDadoseAgenda
     {
-        public static void AtualizarBancoDados()
+        public static bool AtualizarBancoDados(DbContext db)
         {
-            var config = new ConfiguracaoAplicacaoeAgenda();
+            var qtdMigracoesPendentes = db.Database.GetPendingMigrations().Count();
 
-            var db = new eAgendaDbContext(config.ConnectionStrings);
+            if (qtdMigracoesPendentes == 0)
+                return false;
 
-            var migracoesPendentes = db.Database.GetPendingMigrations();
+            db.Database.Migrate();
 
-            if (migracoesPendentes.Count() > 0)
-                db.Database.Migrate();
+            return true;
         }
     }
 }

@@ -7,8 +7,9 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
     public class CompromissoProfile : Profile
     {
         public CompromissoProfile()
-        {
+        {            
             CreateMap<FormsCompromissoViewModel, Compromisso>()
+                .ForMember(destino => destino.Id, opt => opt.Ignore())
                 .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>());
 
             CreateMap<Compromisso, ListarCompromissoViewModel>()

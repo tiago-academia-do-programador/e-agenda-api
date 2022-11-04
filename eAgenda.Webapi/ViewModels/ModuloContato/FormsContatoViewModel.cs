@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace eAgenda.Webapi.ViewModels.ModuloContato
 {
     public class FormsContatoViewModel
     {
+        public Guid Id { get; set; }
+
+
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public string Nome { get; set; }
 
