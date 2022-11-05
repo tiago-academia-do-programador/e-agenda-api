@@ -1,6 +1,5 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
-//using eAgenda.Infra.Configs;
 using Serilog;
 using Serilog.Events;
 
@@ -27,12 +26,7 @@ namespace eAgenda.Infra.Logging
                    .MinimumLevel.Debug()
                    .WriteTo.File(diretorioSaida + "/log.txt", rollingInterval: RollingInterval.Day,
                             outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-                   .CreateLogger();
-
-            //.WriteTo.Debug()
-
-            //.WriteTo.Seq("http://localhost:5341")
-            
+                   .CreateLogger();            
         }
     }
 

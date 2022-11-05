@@ -1,3 +1,4 @@
+using eAgenda.Infra.Logging;
 using eAgenda.Webapi.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,20 +11,28 @@ namespace eAgenda.Webapi
 {
     public class Startup
     {
+        private IConfiguracaoLogseAgenda configuracaoLogseAgenda;
+        
         public Startup(IWebHostEnvironment hostEnvironment)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(hostEnvironment.ContentRootPath)
                 .AddJsonFile("ConfiguracaoAplicacao.json", true, true)
                 .AddJsonFile($"ConfiguracaoAplicacao.{hostEnvironment.EnvironmentName}.json", true, true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables();            
+
+            Configuration = builder.Build();
 
             if (hostEnvironment.IsDevelopment())
             {
-                
+                configuracaoLogseAgenda = new ConfiguracaoLogsLocal(Configuration);
+            }
+            else
+            {
+                configuracaoLogseAgenda = new ConfiguracaoLogsAzure();
             }
 
-            Configuration = builder.Build();
+            configuracaoLogseAgenda.ConfigurarEscritaLogs();
         }
 
         public Startup(IConfiguration configuration)
