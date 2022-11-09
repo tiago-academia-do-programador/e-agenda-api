@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 
 namespace eAgenda.Infra.Orm
 {
@@ -66,6 +68,8 @@ namespace eAgenda.Infra.Orm
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(connectionString);
+
+            
 
             ILoggerFactory loggerFactory = LoggerFactory.Create((x) =>
             {

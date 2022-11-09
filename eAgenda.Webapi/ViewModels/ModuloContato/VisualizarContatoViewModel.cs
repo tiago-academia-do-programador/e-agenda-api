@@ -1,4 +1,5 @@
 ﻿using eAgenda.Webapi.ViewModels.ModuloCompromisso;
+using System;
 using System.Collections.Generic;
 
 namespace eAgenda.Webapi.ViewModels.ModuloContato
@@ -8,6 +9,8 @@ namespace eAgenda.Webapi.ViewModels.ModuloContato
         public VisualizarContatoViewModel()
         {
         }
+
+        public Guid Id { get; set; }
 
         public string Nome { get; set; }
 
