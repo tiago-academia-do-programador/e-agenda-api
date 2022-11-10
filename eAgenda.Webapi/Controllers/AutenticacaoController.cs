@@ -96,7 +96,7 @@ namespace eAgenda.Webapi.Controllers
             var response = new TokenViewModel
             {
                 Chave = encodedToken,
-                DataExpiracacao = dataExpiracao,
+                DataExpiracao = dataExpiracao,
                 UsuarioToken = new UsuarioTokenViewModel
                 {
                     Id = usuario.Id,

@@ -8,6 +8,6 @@ namespace eAgenda.Webapi.ViewModels.ModuloAutenticacao
 
         public UsuarioTokenViewModel UsuarioToken { get; set; }
 
-        public DateTime DataExpiracacao { get; set; }
+        public DateTime DataExpiracao { get; set; }
     }
 }
