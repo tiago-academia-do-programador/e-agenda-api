@@ -26,13 +26,9 @@ namespace eAgenda.Webapi
             if (hostEnvironment.IsDevelopment())
             {
                 configuracaoLogseAgenda = new ConfiguracaoLogsLocal(Configuration);
-            }
-            else
-            {
-                configuracaoLogseAgenda = new ConfiguracaoLogsAzure();
-            }
-
-            configuracaoLogseAgenda.ConfigurarEscritaLogs();
+                //configuracaoLogseAgenda = new ConfiguracaoLogsAzure();
+                configuracaoLogseAgenda.ConfigurarEscritaLogs();
+            }            
         }
 
         public Startup(IConfiguration configuration)
