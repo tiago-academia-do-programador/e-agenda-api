@@ -48,7 +48,7 @@ namespace eAgenda.Webapi.Config
             services.AddScoped<IRepositorioCategoria, RepositorioCategoriaOrm>();
             services.AddTransient<ServicoCategoria>();
 
-            services.AddTransient<ConfigurarCategoriasMappingAction>();
+            services.AddTransient<ConfigurarCategoriasInsertMappingAction>();
         }
     }
 }

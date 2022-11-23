@@ -1,29 +1,32 @@
 ﻿using AutoMapper;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Webapi.ViewModels.ModuloDespesa;
+using System.Linq;
 
 namespace eAgenda.Webapi.Config.AutoMapperConfig
 {
-    public class ConfigurarCategoriasMappingAction : IMappingAction<FormsDespesaViewModel, Despesa>
+    public class ConfigurarCategoriasInsertMappingAction : IMappingAction<FormsDespesaViewModel, Despesa>
     {
         private readonly IRepositorioCategoria repositorioCategoria;
 
-        public ConfigurarCategoriasMappingAction(IRepositorioCategoria repositorioCategoria)
+        public ConfigurarCategoriasInsertMappingAction(IRepositorioCategoria repositorioCategoria)
         {
             this.repositorioCategoria = repositorioCategoria;
         }
 
         public void Process(FormsDespesaViewModel despesaVM, Despesa despesa, ResolutionContext context)
         {
-            foreach (var categoriaVM in despesaVM.CategoriasSelecionadas)
-            {
-                var categoria = repositorioCategoria.SelecionarPorId(categoriaVM.Id);
+            despesa.Categorias = repositorioCategoria.SelecionarMuitos(despesaVM.CategoriasSelecionadas);
+        }
+    }
 
-                if (categoriaVM.Selecionada)
-                    despesa.AtribuirCategoria(categoria);
-                else
-                    despesa.RemoverCategoria(categoria);
-            }
+    public class ConfigurarCategoriasEditMappingAction : IMappingAction<Despesa, FormsDespesaViewModel>
+    {
+        public void Process(Despesa despesa, FormsDespesaViewModel despesaVM, ResolutionContext context)
+        {
+            despesaVM.CategoriasSelecionadas = despesa.Categorias
+                .Select(categoria => categoria.Id)
+                .ToList();
         }
     }
 }

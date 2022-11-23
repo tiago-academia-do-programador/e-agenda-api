@@ -3,6 +3,7 @@ using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloDespesa
@@ -11,6 +12,11 @@ namespace eAgenda.Infra.Orm.ModuloDespesa
     {       
         public RepositorioCategoriaOrm(IContextoPersistencia contextoPersistencia) : base(contextoPersistencia)
         {            
+        }
+
+        public List<Categoria> SelecionarMuitos(List<Guid> idsCategoriasSelecionadas)
+        {
+            return registros.Where(categoria => idsCategoriasSelecionadas.Contains(categoria.Id)).ToList();
         }
 
         public override Categoria SelecionarPorId(Guid id)

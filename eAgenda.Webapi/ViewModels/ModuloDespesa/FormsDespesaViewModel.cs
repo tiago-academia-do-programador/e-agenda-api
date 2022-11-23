@@ -21,7 +21,7 @@ namespace eAgenda.Webapi.ViewModels.ModuloDespesa
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public FormaPgtoDespesaEnum FormaPagamento { get; set; }
 
-        public List<CategoriaSelecionadaViewModel> CategoriasSelecionadas { get; set; }
+        public List<Guid> CategoriasSelecionadas { get; set; }
 
 
     }
