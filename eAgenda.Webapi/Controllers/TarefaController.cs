@@ -25,9 +25,9 @@ namespace eAgenda.Webapi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos()
+        public ActionResult<List<ListarTarefaViewModel>> SelecionarTodos(StatusTarefaEnum status)
         {
-            var tarefaResult = servicoTarefa.SelecionarTodos(StatusTarefaEnum.Todos, UsuarioLogado.Id);
+            var tarefaResult = servicoTarefa.SelecionarTodos(status, UsuarioLogado.Id);
 
             if (tarefaResult.IsFailed)
                 return InternalError(tarefaResult);
@@ -38,6 +38,8 @@ namespace eAgenda.Webapi.Controllers
                 dados = mapeadorTarefas.Map<List<ListarTarefaViewModel>>(tarefaResult.Value)
             });
         }
+
+        
 
         [HttpGet("visualizacao-completa/{id:guid}")]
         public ActionResult<VisualizarTarefaViewModel> SelecionarTarefaCompletaPorId(Guid id)
