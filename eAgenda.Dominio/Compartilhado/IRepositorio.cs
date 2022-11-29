@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eAgenda.Dominio.ModuloContato;
+using System;
 using System.Collections.Generic;
 
 namespace eAgenda.Dominio.Compartilhado

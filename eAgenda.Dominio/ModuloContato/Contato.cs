@@ -28,6 +28,8 @@ namespace eAgenda.Dominio.ModuloContato
 
         public List<Compromisso> Compromissos { get; set; }
 
+        public bool Favorito { get; set; }
+
         public override void Atualizar(Contato registro)
         {
             Id = registro.Id;
@@ -62,6 +64,11 @@ namespace eAgenda.Dominio.ModuloContato
         public Contato Clonar()
         {
             return MemberwiseClone() as Contato;
+        }
+
+        public void ConfigurarFavorito()
+        {
+            Favorito = Favorito ? false : true;
         }
     }
 }

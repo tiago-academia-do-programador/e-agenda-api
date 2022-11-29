@@ -3,6 +3,7 @@ using eAgenda.Dominio.ModuloContato;
 using eAgenda.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloContato
@@ -19,6 +20,25 @@ namespace eAgenda.Infra.Orm.ModuloContato
             return registros
                 .Include(x => x.Compromissos)
                 .SingleOrDefault(x => x.Id == id);
+        }
+
+        public List<Contato> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos, Guid usuarioId = default)
+        {
+            if (contatosFavoritos == ContatoFavoritoEnum.Todos)
+                return registros                    
+                    .Where(x => x.UsuarioId == usuarioId)
+                    .ToList();
+
+            else if (contatosFavoritos == ContatoFavoritoEnum.Sim)
+                return registros
+                    .Where(x => x.Favorito == true)
+                    .Where(x => x.UsuarioId == usuarioId)
+                    .ToList();
+            else
+                return registros
+                   .Where(x => x.Favorito == false)
+                   .Where(x => x.UsuarioId == usuarioId)
+                   .ToList();            
         }
     }
 }

@@ -117,13 +117,13 @@ namespace eAgenda.Aplicacao.ModuloContato
             }
         }
 
-        public Result<List<Contato>> SelecionarTodos(Guid usuarioId = new Guid())
+        public Result<List<Contato>> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos, Guid usuarioId = new Guid())
         {
             Log.Logger.Debug("Tentando selecionar contatos...");
 
             try
             {
-                var contatos = repositorioContato.SelecionarTodos(usuarioId);
+                var contatos = repositorioContato.SelecionarTodos(contatosFavoritos, usuarioId);
 
                 Log.Logger.Information("Contatos selecionados com sucesso");
 
@@ -168,6 +168,30 @@ namespace eAgenda.Aplicacao.ModuloContato
             }
         }
 
+        public Result<Contato> ConfigurarFavoritos(Contato contato)
+        {
+            Log.Logger.Debug("Tentando favoritar contato {ContatoId}...", contato.Id);
 
+            try
+            {
+                contato.ConfigurarFavorito();
+
+                repositorioContato.Editar(contato);
+
+                contextoPersistencia.GravarDados();
+
+                Log.Logger.Information("Contato {ContatoId} favoritado com sucesso", contato.Id);
+
+                return Result.Ok(contato);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar favoritar o Contato";
+
+                Log.Logger.Error(ex, msgErro + " {ContatoId}", contato.Id);
+
+                return Result.Fail(msgErro);
+            }
+        }
     }
 }

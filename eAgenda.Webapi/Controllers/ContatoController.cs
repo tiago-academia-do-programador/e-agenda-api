@@ -25,9 +25,9 @@ namespace eAgenda.Webapi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos()
+        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos)
         {
-            var contatoResult = servicoContato.SelecionarTodos(UsuarioLogado.Id);
+            var contatoResult = servicoContato.SelecionarTodos(contatosFavoritos, UsuarioLogado.Id);
 
             if (contatoResult.IsFailed)
                 return InternalError(contatoResult);
@@ -111,6 +111,26 @@ namespace eAgenda.Webapi.Controllers
             {
                 sucesso = true,
                 dados = contatoVM
+            });
+        }
+
+        [HttpPut("favoritos/{id:guid}")]
+        public ActionResult<FormsContatoViewModel> ConfigurarFavoritos(Guid id)
+        {
+            var contatoResult = servicoContato.SelecionarPorId(id);
+
+            if (contatoResult.IsFailed && RegistroNaoEncontrado(contatoResult))
+                return NotFound(contatoResult);
+
+            contatoResult = servicoContato.ConfigurarFavoritos(contatoResult.Value);
+
+            if (contatoResult.IsFailed)
+                return InternalError(contatoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorContatos.Map<FormsContatoViewModel>(contatoResult.Value)
             });
         }
 

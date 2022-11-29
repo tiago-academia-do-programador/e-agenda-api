@@ -12,5 +12,7 @@ namespace eAgenda.Webapi.ViewModels.ModuloContato
 
         public string Cargo { get; set; }
 
+        public bool Favorito { get; set; }
+
     }
 }
