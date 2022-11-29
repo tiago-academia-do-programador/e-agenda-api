@@ -39,7 +39,22 @@ namespace eAgenda.Webapi.Controllers
             });
         }
 
-        [HttpGet, Route("entre/{dataInicial:datetime}={dataFinal:datetime}")]
+        [HttpGet, Route("hoje/{dataAtual:datetime}")]
+        public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosDeHoje(DateTime dataAtual)
+        {
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataAtual, dataAtual, UsuarioLogado.Id);
+
+            if (compromissoResult.IsFailed)
+                return InternalError(compromissoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
+            });
+        }
+
+        [HttpGet, Route("futuros/{dataInicial:datetime}={dataFinal:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
             var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal, UsuarioLogado.Id);

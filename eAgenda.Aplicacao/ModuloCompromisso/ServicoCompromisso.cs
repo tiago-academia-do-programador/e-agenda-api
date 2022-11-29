@@ -171,7 +171,7 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
 
         public Result<List<Compromisso>> SelecionarCompromissosPassados(DateTime hoje, Guid id = new Guid())
         {
-            return repositorioCompromisso.SelecionarCompromissosPassados(hoje);
+            return repositorioCompromisso.SelecionarCompromissosPassados(hoje, id);
         }
 
         public Result<List<Compromisso>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal, Guid id = new Guid())
