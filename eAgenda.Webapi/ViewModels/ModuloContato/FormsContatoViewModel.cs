@@ -22,5 +22,7 @@ namespace eAgenda.Webapi.ViewModels.ModuloContato
 
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public string Cargo { get; set; }
+
+        public bool Favorito { get; set; }
     }
 }

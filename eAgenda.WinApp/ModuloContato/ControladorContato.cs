@@ -110,7 +110,7 @@ namespace eAgenda.WinApp.ModuloContato
 
         private void CarregarContatos()
         {
-            List<Contato> contatos = servicoContato.SelecionarTodos(FavoritoEnum.Todos).Value;
+            List<Contato> contatos = servicoContato.SelecionarTodos(StatusFavoritoEnum.Todos).Value;
 
             tabelaContatos.AtualizarRegistros(contatos);
 

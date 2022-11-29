@@ -3,7 +3,7 @@
 namespace eAgenda.Dominio.ModuloContato
 {
     [Flags]
-    public enum FavoritoEnum
+    public enum StatusFavoritoEnum
     {
         Todos, Sim, Nao
     }
