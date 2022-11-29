@@ -39,6 +39,36 @@ namespace eAgenda.Webapi.Controllers
             });
         }
 
+        [HttpGet, Route("ultimos-30-dias")]
+        public ActionResult<List<ListarDespesaViewModel>> SelecionarDespesasUltimos30Dias()
+        {
+            var despesaResult = servicoDespesa.SelecionarDespesasUltimos30Dias(DateTime.Now, UsuarioLogado.Id);
+
+            if (despesaResult.IsFailed)
+                return InternalError(despesaResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorDespesas.Map<List<ListarDespesaViewModel>>(despesaResult.Value)
+            });
+        }
+
+        [HttpGet, Route("antigas")]
+        public ActionResult<List<ListarDespesaViewModel>> SelecionarDespesasAntigas()
+        {
+            var despesaResult = servicoDespesa.SelecionarDespesasAntigas(DateTime.Now, UsuarioLogado.Id);
+
+            if (despesaResult.IsFailed)
+                return InternalError(despesaResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorDespesas.Map<List<ListarDespesaViewModel>>(despesaResult.Value)
+            });
+        }
+
         [HttpGet("visualizacao-completa/{id:guid}")]
         public ActionResult<VisualizarDespesaViewModel> SelecionarDespesaCompletoPorId(Guid id)
         {

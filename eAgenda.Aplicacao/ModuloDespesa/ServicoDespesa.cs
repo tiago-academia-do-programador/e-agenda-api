@@ -139,6 +139,50 @@ namespace eAgenda.Aplicacao.ModuloDespesa
             }
         }
 
+        public Result<List<Despesa>> SelecionarDespesasAntigas(DateTime dataAtual, Guid usuarioId = new Guid())
+        {
+            Log.Logger.Debug("Tentando selecionar despesas antigas...");
+
+            try
+            {
+                var despesas = repositorioDespesa.SelecionarDespesasAntigas(dataAtual, usuarioId);
+
+                Log.Logger.Information("Despesas antigas selecionadas com sucesso");
+
+                return Result.Ok(despesas);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar selecionar as despesas antigas";
+
+                Log.Logger.Error(ex, msgErro);
+
+                return Result.Fail(msgErro);
+            }
+        }
+
+        public Result<List<Despesa>> SelecionarDespesasUltimos30Dias(DateTime dataAtual, Guid usuarioId = new Guid())
+        {
+            Log.Logger.Debug("Tentando selecionar despesas recentes...");
+
+            try
+            {
+                var despesas = repositorioDespesa.SelecionarDespesasUltimos30Dias(dataAtual, usuarioId);
+
+                Log.Logger.Information("Despesas recentes selecionadas com sucesso");
+
+                return Result.Ok(despesas);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar selecionar as despesas recentes";
+
+                Log.Logger.Error(ex, msgErro);
+
+                return Result.Fail(msgErro);
+            }
+        }
+
         public Result<Despesa> SelecionarPorId(Guid id)
         {
             Log.Logger.Debug("Tentando selecionar despesa {DespesaId}...", id);
