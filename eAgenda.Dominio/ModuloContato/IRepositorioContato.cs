@@ -6,6 +6,6 @@ namespace eAgenda.Dominio.ModuloContato
 {
     public interface IRepositorioContato : IRepositorio<Contato>
     {
-        List<Contato> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos, Guid usuarioId = new Guid());
+        List<Contato> SelecionarTodos(FavoritoEnum contatosFavoritos, Guid usuarioId = new Guid());
     }
 }

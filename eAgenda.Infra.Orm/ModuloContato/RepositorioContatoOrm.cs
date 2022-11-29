@@ -22,14 +22,14 @@ namespace eAgenda.Infra.Orm.ModuloContato
                 .SingleOrDefault(x => x.Id == id);
         }
 
-        public List<Contato> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos, Guid usuarioId = default)
+        public List<Contato> SelecionarTodos(FavoritoEnum contatosFavoritos, Guid usuarioId = default)
         {
-            if (contatosFavoritos == ContatoFavoritoEnum.Todos)
+            if (contatosFavoritos == FavoritoEnum.Todos)
                 return registros                    
                     .Where(x => x.UsuarioId == usuarioId)
                     .ToList();
 
-            else if (contatosFavoritos == ContatoFavoritoEnum.Sim)
+            else if (contatosFavoritos == FavoritoEnum.Sim)
                 return registros
                     .Where(x => x.Favorito == true)
                     .Where(x => x.UsuarioId == usuarioId)

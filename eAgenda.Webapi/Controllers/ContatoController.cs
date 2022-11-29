@@ -25,9 +25,9 @@ namespace eAgenda.Webapi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos)
+        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos(FavoritoEnum favoritoEnum)
         {
-            var contatoResult = servicoContato.SelecionarTodos(contatosFavoritos, UsuarioLogado.Id);
+            var contatoResult = servicoContato.SelecionarTodos(favoritoEnum, UsuarioLogado.Id);
 
             if (contatoResult.IsFailed)
                 return InternalError(contatoResult);

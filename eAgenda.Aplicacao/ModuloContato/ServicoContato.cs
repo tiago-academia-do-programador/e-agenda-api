@@ -117,7 +117,7 @@ namespace eAgenda.Aplicacao.ModuloContato
             }
         }
 
-        public Result<List<Contato>> SelecionarTodos(ContatoFavoritoEnum contatosFavoritos, Guid usuarioId = new Guid())
+        public Result<List<Contato>> SelecionarTodos(FavoritoEnum contatosFavoritos, Guid usuarioId = new Guid())
         {
             Log.Logger.Debug("Tentando selecionar contatos...");
 
