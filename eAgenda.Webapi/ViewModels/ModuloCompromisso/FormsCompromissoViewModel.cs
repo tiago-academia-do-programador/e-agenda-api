@@ -26,6 +26,6 @@ namespace eAgenda.Webapi.ViewModels.ModuloCompromisso
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public TimeSpan HoraTermino { get; set; }
 
-        public Guid ContatoId { get; set; }
+        public Guid? ContatoId { get; set; }
     }
 }
