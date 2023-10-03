@@ -26,7 +26,7 @@ namespace eAgenda.Webapi.Config
         {
             services.AddDbContext<eAgendaDbContext>(opt =>
             {
-                opt.UseSqlServer(configuracao.GetConnectionString("SqlServer"), 
+                opt.UseNpgsql(configuracao.GetConnectionString("SqlServer"), 
                     opt => opt.EnableRetryOnFailure(3))
                 .EnableDetailedErrors(detailedErrorsEnabled: true);
             });

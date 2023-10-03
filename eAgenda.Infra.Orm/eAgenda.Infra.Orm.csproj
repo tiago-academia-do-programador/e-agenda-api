@@ -16,4 +16,8 @@
     <ProjectReference Include="..\eAgenda.Infra.Configs\eAgenda.Infra.Configs.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

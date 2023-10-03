@@ -6,6 +6,6 @@
   },
 
   "ConnectionStrings": {
-    "SqlServer": "Data Source=(LOCALDB)\\MSSQLLOCALDB;Initial Catalog=eAgendaOrm;Integrated Security=True"
+    "SqlServer": "Host=dpg-ck4pgkt8ggls73992n7g-a.oregon-postgres.render.com; Database=eagenda; User Id=admin; Password=I3UBU8PH5tuDKZX4pLBDJhCK3Ia7T7X5; TrustServerCertificate=True;"
   }
 }

@@ -12,7 +12,7 @@ namespace eAgenda.Infra.Orm
             if (qtdMigracoesPendentes == 0)
                 return false;
 
-            db.Database.Migrate();
+            //db.Database.Migrate();
 
             return true;
         }

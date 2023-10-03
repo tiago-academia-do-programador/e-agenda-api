@@ -6,6 +6,6 @@
   },
 
   "ConnectionStrings": {
-    "SqlServer": "Server=tcp:eagenda.database.windows.net,1433;Initial Catalog=eAgendaDbStatgging;Persist Security Info=False;User ID=rech;Password=Helen@2014;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    "SqlServer": "ServerHost=dpg-ck4pgkt8ggls73992n7g-a.oregon-postgres.render.com; Database=eagenda; User Id=admin; Password=I3UBU8PH5tuDKZX4pLBDJhCK3Ia7T7X5; TrustServerCertificate=True;"
   }
 }
