@@ -6,7 +6,6 @@ namespace eAgenda.Webapi.ViewModels.ModuloCompromisso
 {
     public class FormsCompromissoViewModel
     {
-        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public string Assunto { get; set; }

@@ -24,39 +24,6 @@ namespace eAgenda.Webapi.Controllers
             this.mapeadorContatos = mapeadorContatos;
         }
 
-        [HttpGet]
-        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos()
-        {
-            var contatoResult = servicoContato.SelecionarTodos(StatusFavoritoEnum.Todos, UsuarioLogado.Id);
-
-            if (contatoResult.IsFailed)
-                return InternalError(contatoResult);
-
-            return Ok(new
-            {
-                sucesso = true,
-                dados = mapeadorContatos.Map<List<ListarContatoViewModel>>(contatoResult.Value)
-            });
-        }
-
-
-        [HttpGet("{id:guid}")]
-        public ActionResult<FormsContatoViewModel> SelecionarContatoPorId(Guid id)
-        {
-            var contatoResult = servicoContato.SelecionarPorId(id);
-
-            if (contatoResult.IsFailed && RegistroNaoEncontrado(contatoResult))
-                return NotFound(contatoResult);
-
-            if (contatoResult.IsFailed)
-                return InternalError(contatoResult);
-
-            return Ok(new
-            {
-                sucesso = true,
-                dados = mapeadorContatos.Map<FormsContatoViewModel>(contatoResult.Value)
-            });
-        }
 
         [HttpPost]
         public ActionResult<FormsContatoViewModel> Inserir(FormsContatoViewModel contatoVM)
@@ -110,5 +77,78 @@ namespace eAgenda.Webapi.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        public ActionResult<List<ListarContatoViewModel>> SelecionarTodos(StatusFavoritoEnum statusFavorito)
+        {
+            var contatoResult = servicoContato.SelecionarTodos(statusFavorito, UsuarioLogado.Id);
+
+            if (contatoResult.IsFailed)
+                return InternalError(contatoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorContatos.Map<List<ListarContatoViewModel>>(contatoResult.Value)
+            });
+        }
+
+
+        [HttpGet("{id:guid}")]
+        public ActionResult<FormsContatoViewModel> SelecionarContatoPorId(Guid id)
+        {
+            var contatoResult = servicoContato.SelecionarPorId(id);
+
+            if (contatoResult.IsFailed && RegistroNaoEncontrado(contatoResult))
+                return NotFound(contatoResult);
+
+            if (contatoResult.IsFailed)
+                return InternalError(contatoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorContatos.Map<FormsContatoViewModel>(contatoResult.Value)
+            });
+        }
+
+        [HttpGet("visualizacao-completa/{id:guid}")]
+        public ActionResult<VisualizarContatoViewModel> SelecionarContatoCompletoPorId(Guid id)
+        {
+            var contatoResult = servicoContato.SelecionarPorId(id);
+
+            if (contatoResult.IsFailed && RegistroNaoEncontrado(contatoResult))
+                return NotFound(contatoResult);
+
+            if (contatoResult.IsFailed)
+                return InternalError(contatoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorContatos.Map<VisualizarContatoViewModel>(contatoResult.Value)
+            });
+        }
+
+        [HttpPut("favoritos/{id:guid}")]
+        public ActionResult<FormsContatoViewModel> ConfigurarStatusFavorito(Guid id)
+        {
+            var contatoResult = servicoContato.SelecionarPorId(id);
+
+            if (contatoResult.IsFailed && RegistroNaoEncontrado(contatoResult))
+                return NotFound(contatoResult);
+
+            contatoResult = servicoContato.ConfigurarFavoritos(contatoResult.Value);
+
+            if (contatoResult.IsFailed)
+                return InternalError(contatoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorContatos.Map<FormsContatoViewModel>(contatoResult.Value)
+            });
+        }
+
     }
 }

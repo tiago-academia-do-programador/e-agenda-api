@@ -14,7 +14,8 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
 
             CreateMap<Contato, ListarContatoViewModel>();
 
-            CreateMap<Contato, VisualizarContatoViewModel>();
+            CreateMap<Contato, VisualizarContatoViewModel>()
+                .ForMember(destino => destino.Compromissos, opt => opt.MapFrom(origem => origem.Compromissos)); ;
 
             CreateMap<Contato, FormsContatoViewModel>();
         }        
