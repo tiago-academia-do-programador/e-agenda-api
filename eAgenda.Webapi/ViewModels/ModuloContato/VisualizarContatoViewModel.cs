@@ -21,10 +21,5 @@ namespace eAgenda.Webapi.ViewModels.ModuloContato
         public string Empresa { get; set; }
 
         public string Cargo { get; set; }
-
-        public bool Favorito { get; set; }
-
-        public List<ListarCompromissoViewModel> Compromissos { get; set; }
-
     }
 }
