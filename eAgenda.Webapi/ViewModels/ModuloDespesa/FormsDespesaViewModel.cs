@@ -7,7 +7,6 @@ namespace eAgenda.Webapi.ViewModels.ModuloDespesa
 {
     public class FormsDespesaViewModel
     {
-        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo '{0}' é obrigatório")]
         public string Descricao { get; set; }

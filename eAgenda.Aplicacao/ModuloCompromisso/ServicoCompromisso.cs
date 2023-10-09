@@ -30,6 +30,7 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
 
             try
             {
+                compromisso.Data = compromisso.Data.ToUniversalTime();
                 repositorioCompromisso.Inserir(compromisso);
 
                 contextoPersistencia.GravarDados();
@@ -61,6 +62,8 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
 
             try
             {
+                compromisso.Data = compromisso.Data.ToUniversalTime();
+
                 repositorioCompromisso.Editar(compromisso);
 
                 contextoPersistencia.GravarDados();

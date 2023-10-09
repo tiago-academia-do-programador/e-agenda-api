@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace eAgenda.Webapi
 {
@@ -75,6 +76,7 @@ namespace eAgenda.Webapi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //if (env.IsDevelopment())
+
             
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
@@ -92,6 +94,8 @@ namespace eAgenda.Webapi
             {
                 endpoints.MapControllers();
             });
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
     }
 }

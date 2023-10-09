@@ -30,6 +30,7 @@ namespace eAgenda.Aplicacao.ModuloDespesa
 
             try
             {
+                despesa.Data = despesa.Data.ToUniversalTime();
                 repositorioDespesa.Inserir(despesa);
 
                 contextoPersistencia.GravarDados();
