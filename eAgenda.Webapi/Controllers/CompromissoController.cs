@@ -42,7 +42,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("hoje")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosDeHoje()
         {
-            var dataAtual = DateTime.Now;
+            var dataAtual = DateTime.Now.ToUniversalTime();
 
             var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataAtual, dataAtual, UsuarioLogado.Id);
 

@@ -42,7 +42,8 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("ultimos-30-dias")]
         public ActionResult<List<ListarDespesaViewModel>> SelecionarDespesasUltimos30Dias()
         {
-            var despesaResult = servicoDespesa.SelecionarDespesasUltimos30Dias(DateTime.Now, UsuarioLogado.Id);
+            var data = DateTime.Now.ToUniversalTime();
+            var despesaResult = servicoDespesa.SelecionarDespesasUltimos30Dias(data, UsuarioLogado.Id);
 
             if (despesaResult.IsFailed)
                 return InternalError(despesaResult);
@@ -57,7 +58,9 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("antigas")]
         public ActionResult<List<ListarDespesaViewModel>> SelecionarDespesasAntigas()
         {
-            var despesaResult = servicoDespesa.SelecionarDespesasAntigas(DateTime.Now, UsuarioLogado.Id);
+            var data = DateTime.Now.ToUniversalTime();
+
+            var despesaResult = servicoDespesa.SelecionarDespesasAntigas(data, UsuarioLogado.Id);
 
             if (despesaResult.IsFailed)
                 return InternalError(despesaResult);
