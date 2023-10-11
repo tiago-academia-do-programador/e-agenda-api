@@ -39,50 +39,52 @@ namespace eAgenda.Webapi.Controllers
             });
         }
 
-        //[HttpGet, Route("hoje/{dataAtual:datetime}")]
-        //public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosDeHoje(DateTime dataAtual)
-        //{
-        //    var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataAtual, dataAtual, UsuarioLogado.Id);
+        [HttpGet, Route("hoje")]
+        public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosDeHoje()
+        {
+            var dataAtual = DateTime.Now;
 
-        //    if (compromissoResult.IsFailed)
-        //        return InternalError(compromissoResult);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataAtual, dataAtual, UsuarioLogado.Id);
 
-        //    return Ok(new
-        //    {
-        //        sucesso = true,
-        //        dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
-        //    });
-        //}
+            if (compromissoResult.IsFailed)
+                return InternalError(compromissoResult);
 
-        //[HttpGet, Route("futuros/{dataInicial:datetime}={dataFinal:datetime}")]
-        //public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
-        //{
-        //    var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal, UsuarioLogado.Id);
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
+            });
+        }
 
-        //    if (compromissoResult.IsFailed)
-        //        return InternalError(compromissoResult);
+        [HttpGet, Route("futuros/{dataInicial:datetime}={dataFinal:datetime}")]
+        public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
+        {
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal, UsuarioLogado.Id);
 
-        //    return Ok(new
-        //    {
-        //        sucesso = true,
-        //        dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
-        //    });
-        //}
+            if (compromissoResult.IsFailed)
+                return InternalError(compromissoResult);
 
-        //[HttpGet, Route("passados/{dataAtual:datetime}")]
-        //public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosPassados(DateTime dataAtual)
-        //{
-        //    var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual, UsuarioLogado.Id);
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
+            });
+        }
 
-        //    if (compromissoResult.IsFailed)
-        //        return InternalError(compromissoResult);
+        [HttpGet, Route("passados/{dataAtual:datetime}")]
+        public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosPassados(DateTime dataAtual)
+        {
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual, UsuarioLogado.Id);
 
-        //    return Ok(new
-        //    {
-        //        sucesso = true,
-        //        dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
-        //    });
-        //}
+            if (compromissoResult.IsFailed)
+                return InternalError(compromissoResult);
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = mapeadorCompromissos.Map<List<ListarCompromissoViewModel>>(compromissoResult.Value)
+            });
+        }
 
         [HttpGet("visualizacao-completa/{id:guid}")]
         public ActionResult<VisualizarCompromissoViewModel> SelecionarCompromissoCompletoPorId(Guid id)

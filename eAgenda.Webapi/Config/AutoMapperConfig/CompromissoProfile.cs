@@ -10,6 +10,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
         {            
             CreateMap<FormsCompromissoViewModel, Compromisso>()
                 .ForMember(destino => destino.Id, opt => opt.Ignore())
+                .ForMember(destino => destino.Data, opt => opt.MapFrom(origem => origem.Data.ToUniversalTime()))
                 .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>());
 
             CreateMap<Compromisso, ListarCompromissoViewModel>()

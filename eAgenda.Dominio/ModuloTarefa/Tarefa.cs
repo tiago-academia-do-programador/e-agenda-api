@@ -87,7 +87,7 @@ namespace eAgenda.Dominio.ModuloTarefa
             itemTarefa?.Concluir();
 
             if (itens.All(x => x.Concluido))
-                DataConclusao = DateTime.Now.Date;
+                DataConclusao = DateTime.Now;
 
             CalcularPercentualConcluido();
         }
