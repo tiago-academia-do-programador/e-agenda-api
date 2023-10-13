@@ -2,6 +2,7 @@
 using eAgenda.Dominio.Compartilhado;
 using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Webapi.ViewModels.ModuloTarefa;
+using System;
 
 namespace eAgenda.Webapi.Config.AutoMapperConfig
 {
@@ -19,6 +20,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
                 .ForMember(destino => destino.Id, opt => opt.Ignore())
                 .ForMember(destino => destino.UsuarioId, opt => opt.MapFrom<UsuarioResolver>())
                 .ForMember(destino => destino.Itens, opt => opt.Ignore())
+                .ForMember(destino => destino.DataCriacao, opt => opt.MapFrom(opt => DateTime.Now.ToUniversalTime()))
                 .AfterMap<AdicionarItensMappingAction>();
 
             CreateMap<EditarTarefaViewModel, Tarefa>()

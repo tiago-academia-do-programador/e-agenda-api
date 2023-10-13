@@ -29,6 +29,16 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
                 .ToList();
         }
 
+        public List<Compromisso> SelecionarCompromissosDeHoje(Guid usuarioId = new Guid())
+        {
+            DateTime dataDeHoje = DateTime.UtcNow.Date;
+            return registros
+                .Include(x => x.Contato)
+                .Where(x => x.Data == dataDeHoje)
+                .Where(x => x.UsuarioId.Equals(usuarioId))
+                .ToList();
+        }
+
         public List<Compromisso> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal, Guid usuarioId = new Guid())
         {
             return registros

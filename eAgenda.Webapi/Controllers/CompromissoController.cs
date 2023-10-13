@@ -44,7 +44,7 @@ namespace eAgenda.Webapi.Controllers
         {
             var dataAtual = DateTime.Now.ToUniversalTime();
 
-            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataAtual, dataAtual, UsuarioLogado.Id);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosDeHoje(UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);
@@ -59,7 +59,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("futuros/{dataInicial:datetime}={dataFinal:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
-            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial, dataFinal, UsuarioLogado.Id);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosFuturos(dataInicial.ToUniversalTime(), dataFinal.ToUniversalTime(), UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);
@@ -74,7 +74,7 @@ namespace eAgenda.Webapi.Controllers
         [HttpGet, Route("passados/{dataAtual:datetime}")]
         public ActionResult<List<ListarCompromissoViewModel>> SelecionarCompromissosPassados(DateTime dataAtual)
         {
-            var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual, UsuarioLogado.Id);
+            var compromissoResult = servicoCompromisso.SelecionarCompromissosPassados(dataAtual.ToUniversalTime(), UsuarioLogado.Id);
 
             if (compromissoResult.IsFailed)
                 return InternalError(compromissoResult);

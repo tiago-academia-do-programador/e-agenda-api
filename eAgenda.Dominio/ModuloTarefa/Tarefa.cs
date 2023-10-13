@@ -13,7 +13,7 @@ namespace eAgenda.Dominio.ModuloTarefa
         public Tarefa() : base()
         {
             Prioridade = PrioridadeTarefaEnum.Baixa;
-            DataCriacao = DateTime.Now;
+            DataCriacao = DateTime.UtcNow;
             itens = new List<ItemTarefa>();
         }
 
@@ -87,7 +87,7 @@ namespace eAgenda.Dominio.ModuloTarefa
             itemTarefa?.Concluir();
 
             if (itens.All(x => x.Concluido))
-                DataConclusao = DateTime.Now;
+                DataConclusao = DateTime.UtcNow;
 
             CalcularPercentualConcluido();
         }
