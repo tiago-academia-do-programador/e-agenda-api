@@ -80,10 +80,10 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
             foreach (var itemVM in viewModel.Itens)
             {
                 if (itemVM.Concluido)
-                    tarefa.ConcluirItem(itemVM.Id);
+                    tarefa.ConcluirItem(itemVM.Id.Value);
 
                 else
-                    tarefa.MarcarPendente(itemVM.Id);
+                    tarefa.MarcarPendente(itemVM.Id.Value);
             }
 
             foreach (var itemVM in viewModel.Itens)
@@ -95,7 +95,7 @@ namespace eAgenda.Webapi.Config.AutoMapperConfig
                 }
                 else if (itemVM.Status == StatusItemTarefa.Removido)
                 {
-                    tarefa.RemoverItem(itemVM.Id);
+                    tarefa.RemoverItem(itemVM.Id.Value);
                 }
             }
         }
