@@ -5,7 +5,7 @@ namespace eAgenda.Webapi.ViewModels.ModuloTarefa
 {
     public class FormsItemTarefaViewModel
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Titulo { get; set; }
 
